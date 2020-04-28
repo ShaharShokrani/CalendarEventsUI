@@ -59,8 +59,8 @@ export class EventsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
           let currentDate = new Date();
           let goToDate = new Date(this.year? this.year : currentDate.getFullYear(), 
-                                  this.month? this.month-1 : currentDate.getMonth()-1,
-                                  this.day? this.day : currentDate.getDay());
+                                  this.month? this.month-1 : currentDate.getMonth(),
+                                  this.day? this.day : currentDate.getDate());
           this.calendarApi.gotoDate(goToDate);
         }
       )
