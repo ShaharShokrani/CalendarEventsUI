@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import dayGridPlugin, { DayGridView } from '@fullcalendar/daygrid';
 import timeGrigPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
-import { EventInput, EventApi, Calendar } from '@fullcalendar/core';
+import { EventInput, EventApi, Calendar, View } from '@fullcalendar/core';
 
 import { Event } from '../event.model';
 import { EventService } from '../events.service';
@@ -42,6 +42,7 @@ export class EventsListComponent implements OnInit, AfterViewInit, OnDestroy {
     //TODO: Add an issue to understand the difference between ngOnInit vs ngAfterViewInit usage.
     this.calendarApi = this.calendarComponent.getApi();
     console.log(this.calendarComponent);
+    console.log(this.calendarApi);
     
     this.subscription = this.eventService.eventsChanged
       .subscribe(
@@ -53,15 +54,19 @@ export class EventsListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.route.params
       .subscribe(
         (params: Params) => {
-          this.year = +params['year'];
-          this.month = +params['month'];
-          this.day = +params['day'];
+          if (+params['year'] != this.year ||
+              +params['month'] != this.month ||
+              +params['day'] != this.day)
+          {
+            this.year = +params['year'];
+            this.month = +params['month'];
+            this.day = params['day'];
 
-          let currentDate = new Date();
-          let goToDate = new Date(this.year? this.year : currentDate.getFullYear(), 
-                                  this.month? this.month-1 : currentDate.getMonth(),
-                                  this.day? this.day : currentDate.getDate());
-          this.calendarApi.gotoDate(goToDate);
+            let goToDate = new Date(this.year, this.month, this.day);
+            this.calendarApi.gotoDate(goToDate);
+            //TODO: This navigated repeated here again in case the url has been pasted into the url bar, find a better way to handle it (it should be handled from only one place).
+            this.router.navigate(['events', this.year, this.month, this.day]); 
+          }
         }
       )
   }
@@ -85,7 +90,27 @@ export class EventsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     console.log("this.calendarComponent");
     console.log(this.calendarComponent.defaultDate);
-  }  
+  } 
+
+  handleDatesRender(arg: {view: View, el: HTMLElement }): void {
+    let currentStart = arg.view.currentStart;
+    
+    console.log("params:");
+    console.log(this.route.params);
+
+    console.log("router:");
+    console.log(this.router);
+
+    //The current navigated in-app route were from inside the calendar datesRender event
+    if (this.year != currentStart.getFullYear() ||
+        this.month != (currentStart.getMonth() + 1) ||
+        this.day != currentStart.getDate()) {
+          this.year = currentStart.getFullYear();
+          this.month = (currentStart.getMonth() + 1);
+          this.day = currentStart.getDate();
+          this.router.navigate(['events', this.year, this.month, this.day]);
+    }
+  }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();

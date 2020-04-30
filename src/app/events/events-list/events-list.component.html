@@ -7,6 +7,7 @@
   [events]="events"
   [defaultDate]="defaultDate"
   [timeZone]="timeZone"
+  (datesRender)="handleDatesRender($event)"
   (eventClick)="handleEventClick($event)">
 </full-calendar>
 
