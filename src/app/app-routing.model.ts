@@ -8,16 +8,14 @@ import { AboutComponent } from './about/about.component';
 
 const eventChildren = [
     { path: '', component: EventStartComponent },
-    // { path: 'new', component: EventEditComponent },
-    // { path: ':id', component: EventDetailComponent },
-    // { path: ':id/edit', component: EventEditComponent }
+    { path: 'new', component: EventEditComponent },
+    { path: ':id', component: EventDetailComponent },
+    { path: ':id/edit', component: EventEditComponent }
 ];
 
 const appRoutes : Routes = [
-    { path: '', redirectTo: '/events' , pathMatch: 'full'},    
-    { path: 'events', component: EventsComponent, children: eventChildren},
-    { path: 'events/:year', component: EventsComponent, children: eventChildren},
-    { path: 'events/:year/:month', component: EventsComponent, children: eventChildren},
+    { path: '', redirectTo: '/events' , pathMatch: 'full'},
+    // { path: 'events', component: EventsComponent, children: eventChildren},
     { path: 'events/:year/:month/:day', component: EventsComponent, children: eventChildren},
     { path: 'about', component: AboutComponent, pathMatch: 'prefix'}
 ]

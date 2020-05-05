@@ -1,14 +1,12 @@
 import { Subject } from 'rxjs';
-import { Event } from './event.model';
 import { EventInput } from '@fullcalendar/core';
 
 export class EventService {
     eventsChanged = new Subject<EventInput[]>();
-    startedViewing = new Subject<string>();
-    startedEditing = new Subject<string>();
+    navigatedToEdit = new Subject<string>();    
 
     private events: EventInput[] = [
-        { id: 1, title: 'Event Now', start: new Date() }
+        { id: "1", title: 'Event Now', start: new Date() }
     ];
     
     getEvents() {
@@ -18,7 +16,8 @@ export class EventService {
         var event = this.events.find(x => x.id === id);        
         if (event) {
             return event;
-        } else {
+        } 
+        else {
             return null;
         }
     }
@@ -29,9 +28,11 @@ export class EventService {
         this.events.push(event);
         this.eventsChanged.next(this.events.slice());
     }
-    updateEvent(index: number, newEventInput: EventInput) {
-        this.events[index] = newEventInput;
-        this.eventsChanged.next(this.events.slice());
+    updateEvent(id: string, newEventInput: EventInput) {
+        let event = this.getEvent(id);
+        if (event) {
+            this.eventsChanged.next(this.events.slice());
+        }        
     }
     deleteEvent(index: number) {
         this.events.splice(index, 1);
@@ -40,5 +41,8 @@ export class EventService {
     addIngredients(events: EventInput[]) {
         this.events.push(...events);
         this.eventsChanged.next(this.events.slice());
+    }
+    navigateToEdit(path: string) {
+        this.navigatedToEdit.next(path);
     }
 }
