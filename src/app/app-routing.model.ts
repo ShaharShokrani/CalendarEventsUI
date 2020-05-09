@@ -15,7 +15,7 @@ const eventChildren = [
 
 const appRoutes : Routes = [
     { path: '', redirectTo: '/events' , pathMatch: 'full'},
-    // { path: 'events', component: EventsComponent, children: eventChildren},
+    { path: 'events', component: EventsComponent, children: eventChildren},
     { path: 'events/:year/:month/:day', component: EventsComponent, children: eventChildren},
     { path: 'about', component: AboutComponent, pathMatch: 'prefix'}
 ]

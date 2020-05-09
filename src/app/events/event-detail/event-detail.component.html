@@ -1,0 +1,35 @@
+<div class="row">
+    <div class="col-xs-12">
+        <img [src]="eventModel.imagePath" alt="{{eventModel.title}}" class="img-responsive" style="max-height: 300px;">
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <h1>{{eventModel.title}}</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        {{eventModel.description}}
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        {{eventModel.start}}
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="btn-group" appDropdown>
+            <button 
+                type="button" 
+                class="btn btn-primary dropdown-toggle">
+                Manage Event <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">                
+                <li><a style="cursor: pointer;" (click)="onEditEvent()">Edit Event</a></li>
+                <li><a style="cursor: pointer;">Delete Event</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

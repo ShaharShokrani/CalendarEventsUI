@@ -1,22 +1,27 @@
-export class Event {
-  public imagePath: string;
-  public imageAlt: string;
+import { DateInput } from '@fullcalendar/core/datelib/env';
+
+export class EventModel {
+  public id: string | number;
+  public imagePath: string;  
   public updateDate: Date;
   public title: string;
-  public start: Date;
+  public description: string;
+  public start: DateInput;
 
   constructor(
-    imagePath: string, 
-    imageAlt: string,
+    id: string | number,
+    imagePath: string,     
     updateDate: Date,
     title: string, 
-    start: Date
+    start: DateInput,
+    description: string
   ) 
   {
-    this.imagePath = imagePath;
-    this.imageAlt = imageAlt;
+    this.id = id;
+    this.imagePath = imagePath;    
     this.updateDate = updateDate;
     this.title = title;
-    this.start = start;    
+    this.start = start;  
+    this.description = description;
   }
 }
