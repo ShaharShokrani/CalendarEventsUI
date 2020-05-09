@@ -1,4 +1,6 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { EventService } from '../events/events.service';
 
 @Component({
   selector: 'app-header',
@@ -8,12 +10,17 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 export class HeaderComponent {
   // @Output() featureSelected = new EventEmitter<string>();
   // collapsed = true;
-  // constructor() { }
+  constructor(private router: Router,
+    private route: ActivatedRoute,
+    private eventService: EventService) { }
 
   // ngOnInit() {
   //   console.log("HeaderComponent.ngOnInit");
   // }
 
+  onNewClick() {
+    this.eventService.navigateToEdit("./new");
+  }
   // onSelect(feature: string) {
   //   this.featureSelected.emit(feature);
   // }

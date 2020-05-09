@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { EventService } from './events.service';
-
 @Component({
   selector: 'app-events',
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.css'],
-  providers: [EventService]
+  providers: []
 })
 export class EventsComponent implements OnInit {
 

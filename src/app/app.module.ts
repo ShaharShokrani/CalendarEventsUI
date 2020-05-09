@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { FullCalendarModule } from '@fullcalendar/angular'; // for FullCalendar!
 
@@ -17,6 +17,7 @@ import { EventItemComponent } from './events/events-list/event-item/event-item.c
 import { EventStartComponent } from './events/event-start/event-start.component';
 import { DropdownDirective } from './shared/dropdown.directive';
 import { AboutComponent } from './about/about.component'
+import { EventService } from './events/events.service';
 
 @NgModule({
   declarations: [
@@ -34,12 +35,12 @@ import { AboutComponent } from './about/about.component'
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     FullCalendarModule,
-    AppRoutingModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [EventService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
