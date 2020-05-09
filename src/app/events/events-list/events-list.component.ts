@@ -59,10 +59,11 @@ export class EventsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.route.params
       .subscribe(
-        (params: Params) => {
-          if (+params['year'] != this.year ||
+        (params: Params) => {          
+          if ((params['year'] && params['month'] && params['day']) &&
+              (+params['year'] != this.year ||
               +params['month'] != this.month ||
-              +params['day'] != this.day)
+              +params['day'] != this.day))
           {
             this.year = +params['year'];
             this.month = +params['month'];
@@ -79,10 +80,6 @@ export class EventsListComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     console.log("EventListComponent.ngOnInit");
     this.events = this.eventService.getEvents();
-  }
-
-  onNewEvent() {
-    this.router.navigate(['new'], {relativeTo: this.route});
   }
 
   onViewItem(id: string) {
@@ -123,6 +120,7 @@ export class EventsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.eventsChangedSubscription.unsubscribe();
+    this.navigatedToEditSubscription.unsubscribe();
   }
 
   // modifyTitle(eventIndex, newTitle) {

@@ -38,21 +38,21 @@ export class EventEditComponent implements OnInit {
   }
 
   initForm() {
-    let eventName = '';
+    let eventTitle = '';
     let eventImagePath = '';
     let eventDescription = '';
 
     if (this.editMode) {
-      const event = this.eventService.getEvent(this.id);
-      eventName = event.name;
-      eventImagePath = event.imagePath;
-      eventDescription = event.description;
+      const eventModel = this.eventService.getEventModel(this.id);
+      eventTitle = eventModel.title;
+      eventImagePath = eventModel.imagePath;
+      eventDescription = eventModel.description;
     }
     
     this.eventForm = new FormGroup({
-      'name': new FormControl(eventName, Validators.required),
+      'title': new FormControl(eventTitle, Validators.required),
       'imagePath': new FormControl(eventImagePath, Validators.required),
-      'description': new FormControl(eventDescription, Validators.required),
+      'description': new FormControl(eventDescription, Validators.required)      
     });
   }
   onAddItem() {
