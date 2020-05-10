@@ -34,4 +34,8 @@ export class EventDetailComponent implements OnInit {
   onEditEvent() {
     this.router.navigate(['edit'], {relativeTo: this.route})
   }
+  onDeleteEvent() {
+    this.eventService.deleteEvent(this.id);
+    this.router.navigate(['../'], {relativeTo: this.route});
+  }
 }

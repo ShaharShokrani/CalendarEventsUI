@@ -7,7 +7,7 @@
                       type="submit" 
                       class="btn btn-success"
                       [disabled]="!eventForm.valid" >Save</button>
-                  <button type="button" class="btn btn-danger">Cancel</button>
+                  <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
               </div>
           </div>
           <div class="row">
@@ -34,6 +34,18 @@
                   </div>
               </div>
           </div>
+          <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label for="start">Start Date</label>
+                    <input 
+                        type="text"
+                        id="start"
+                        formControlName="start"
+                        class="form-control">
+                </div>
+            </div>
+        </div>          
           <div class="row">
               <div class="col-xs-12">
                   <img src="" alt="" class="img-responsive">

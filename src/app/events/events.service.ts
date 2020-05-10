@@ -62,9 +62,13 @@ export class EventService {
             this.eventsChanged.next(this.events.slice());
         }
     }
-    deleteEvent(index: number) {
-        this.events.splice(index, 1);
-        this.eventsChanged.next(this.events.slice());
+    deleteEvent(id: string) {
+        const eventIndex = this.events.findIndex(event => event.id == id);
+        if (eventIndex != -1)
+        {
+            this.events.splice(eventIndex, 1);
+            this.eventsChanged.next(this.events.slice());
+        }
     }
     addIngredients(events: EventInput[]) {
         this.events.push(...events);
