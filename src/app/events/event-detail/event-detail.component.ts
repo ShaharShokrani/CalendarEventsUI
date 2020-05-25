@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { EventModel } from '../event.model';
-import { EventService } from '../events.service';
+import { EventService } from '../event.service';
 
 @Component({
   selector: 'app-event-detail',

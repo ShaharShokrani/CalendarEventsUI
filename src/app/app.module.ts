@@ -17,7 +17,11 @@ import { EventItemComponent } from './events/events-list/event-item/event-item.c
 import { EventStartComponent } from './events/event-start/event-start.component';
 import { DropdownDirective } from './shared/dropdown.directive';
 import { AboutComponent } from './about/about.component'
-import { EventService } from './events/events.service';
+import { EventService } from './events/event.service';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthComponent } from './auth/auth.component';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { AuthInterceptor } from './auth/auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +34,9 @@ import { EventService } from './events/events.service';
     EventEditComponent,
     EventItemComponent,
     EventStartComponent,
-    AboutComponent
+    AboutComponent,
+    AuthComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -38,9 +44,15 @@ import { EventService } from './events/events.service';
     ReactiveFormsModule,
     HttpModule,
     FullCalendarModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [EventService],
+  providers: [EventService, 
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor, 
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

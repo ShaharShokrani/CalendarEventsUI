@@ -7,6 +7,7 @@ export class EventModel {
   public title: string;
   public description: string;
   public start: DateInput;
+  public details: any[];
 
   constructor(
     id: string | number,
@@ -14,7 +15,8 @@ export class EventModel {
     updateDate: Date,
     title: string, 
     start: DateInput,
-    description: string
+    description: string,
+    details: any[]
   ) 
   {
     this.id = id;
@@ -23,5 +25,6 @@ export class EventModel {
     this.title = title;
     this.start = start;  
     this.description = description;
+    this.details = details;
   }
 }

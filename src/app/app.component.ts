@@ -1,29 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { EventInput } from '@fullcalendar/core';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-  currentPage = 'home';
-  selectedEventInput: EventInput;
+export class AppComponent implements OnInit { 
 
-  ngOnInit(): void {
-    console.log("AppComponent.ngOnInit");
+  constructor(private authService: AuthService) {}
+
+  ngOnInit() {
+    this.authService.autoLogin();
   }
-
-  onNavigate(mode: string) {
-    console.log("AppComponent.onNavigate");
-    this.currentPage = mode;
-  }
-
-  // onUpsertEventInput(res : {mode: string, eventApi: EventInput}) {
-  //   console.log("AppComponent.onUpsertEventApi");
-  //   console.log("onUpsertEventApi:");
-  //   console.log(res);
-  //   this.currentPage = res.mode;
-  //   this.selectedEventApi = res.eventApi;
-  // }
 }
