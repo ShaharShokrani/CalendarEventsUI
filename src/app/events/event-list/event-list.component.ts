@@ -14,10 +14,10 @@ import { ToolbarInput } from '@fullcalendar/core/types/input-types';
 
 @Component({
   selector: 'app-events-list',
-  templateUrl: './events-list.component.html',
-  styleUrls: ['./events-list.component.css']
+  templateUrl: './event-list.component.html',
+  styleUrls: ['./event-list.component.css']
 })
-export class EventsListComponent implements OnInit, AfterViewInit, OnDestroy {
+export class EventListComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('calendar', {'static': true}) calendarComponent: FullCalendarComponent;
   calendarApi: Calendar;
   defaultDate = new Date();

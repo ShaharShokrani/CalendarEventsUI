@@ -10,10 +10,10 @@ import { AppRoutingModule } from './app-routing.model';
 import { HeaderComponent } from './header/header.component';
 
 import { EventsComponent } from './events/events.component';
-import { EventsListComponent } from './events/events-list/events-list.component';
+import { EventListComponent } from './events/event-list/event-list.component';
 import { EventDetailComponent } from './events/event-detail/event-detail.component';
 import { EventEditComponent } from './events/event-edit/event-edit.component';
-import { EventItemComponent } from './events/events-list/event-item/event-item.component';
+import { EventItemComponent } from './events/event-list/event-item/event-item.component';
 import { EventStartComponent } from './events/event-start/event-start.component';
 import { DropdownDirective } from './shared/dropdown.directive';
 import { AboutComponent } from './about/about.component'
@@ -29,7 +29,7 @@ import { AuthInterceptor } from './auth/auth-interceptor.service';
     AppComponent,
     HeaderComponent,
     EventsComponent,
-    EventsListComponent,
+    EventListComponent,
     EventDetailComponent,
     EventEditComponent,
     EventItemComponent,
