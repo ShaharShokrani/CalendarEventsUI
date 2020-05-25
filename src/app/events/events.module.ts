@@ -1,0 +1,32 @@
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+
+import { EventsComponent } from './events.component';
+import { EventListComponent } from './event-list/event-list.component';
+import { EventDetailComponent } from './event-detail/event-detail.component';
+import { EventItemComponent } from './event-list/event-item/event-item.component';
+import { EventStartComponent } from './event-start/event-start.component';
+import { EventEditComponent } from './event-edit/event-edit.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { EventsRoutingModule } from './events-routing.module';
+import { SharedModule } from '../shared/shared.module';
+
+@NgModule({
+  declarations: [
+    EventsComponent,
+    EventListComponent,
+    EventDetailComponent,
+    EventItemComponent,
+    EventStartComponent,
+    EventEditComponent
+  ],
+  imports: [
+    RouterModule,    
+    ReactiveFormsModule, 
+    FullCalendarModule, 
+    EventsRoutingModule,
+    SharedModule
+  ]
+})
+export class EventsModule {}
