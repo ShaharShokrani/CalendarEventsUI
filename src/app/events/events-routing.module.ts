@@ -16,8 +16,8 @@ const children = [
 ];
 
 const routes: Routes = [  
-  { path: 'events', component: EventsComponent, children: children},
-  { path: 'events/:year/:month/:day', component: EventsComponent, children: children}
+  { path: '', component: EventsComponent, children: children},
+  { path: ':year/:month/:day', component: EventsComponent, children: children}
 ];
 
 @NgModule({

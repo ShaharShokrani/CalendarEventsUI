@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { EventsComponent } from './events.component';
@@ -22,11 +21,13 @@ import { SharedModule } from '../shared/shared.module';
     EventEditComponent
   ],
   imports: [
-    RouterModule,    
     ReactiveFormsModule, 
-    FullCalendarModule, 
+    FullCalendarModule,    
     EventsRoutingModule,
     SharedModule
+  ],
+  exports: [
+    EventsRoutingModule
   ]
 })
 export class EventsModule {}
