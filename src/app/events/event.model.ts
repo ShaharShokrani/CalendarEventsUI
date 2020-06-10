@@ -1,7 +1,7 @@
 import { DateInput } from '@fullcalendar/core/datelib/env';
 
 export class EventModel {
-  public id: string | number;
+  public id: string;
   public imagePath: string;  
   public updateDate: Date;
   public title: string;
@@ -10,7 +10,7 @@ export class EventModel {
   public details: any[];
 
   constructor(
-    id: string | number,
+    id: string,
     imagePath: string,     
     updateDate: Date,
     title: string, 

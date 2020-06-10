@@ -64,10 +64,7 @@ export class EventListComponent implements OnInit, AfterViewInit, OnDestroy {
     //TODO: Add an issue to understand the difference between ngOnInit vs ngAfterViewInit usage.
     this.calendarApi = this.calendarComponent.getApi();
     this.calendarComponent.header = this.toolBarInput;
-    this.calendarComponent.plugins = [ 'calendarPlugins', 'dayGrid', 'timeGrid' ];
-        
-    console.log(this.calendarComponent);
-    console.log(this.calendarApi);
+    this.calendarComponent.plugins = [ 'calendarPlugins', 'dayGrid', 'timeGrid' ];        
     
     this.navigatedToEditSubscription = this.eventService.navigatedToEdit
       .subscribe(
@@ -103,8 +100,7 @@ export class EventListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       )
   }
-  ngOnInit() {
-    console.log("EventListComponent.ngOnInit");
+  ngOnInit() {    
     this.eventsInputs = this.eventService.getEvents();
   }
 
@@ -113,22 +109,12 @@ export class EventListComponent implements OnInit, AfterViewInit, OnDestroy {
       .next(id);
   }
 
-  handleEventClick(model: {el: Object, event: EventApi, jsEvent: MouseEvent, view: DayGridView}) {
-    console.log(model);
+  handleEventClick(model: {el: Object, event: EventApi, jsEvent: MouseEvent, view: DayGridView}) {    
     this.onViewItem(model.event.id);
-
-    console.log("this.calendarComponent");
-    console.log(this.calendarComponent.defaultDate);
   } 
 
   handleDatesRender(arg: {view: View, el: HTMLElement }): void {
-    let currentStart = arg.view.currentStart;
-    
-    console.log("params:");
-    console.log(this.route.params);
-
-    console.log("router:");
-    console.log(this.router);
+    let currentStart = arg.view.currentStart;    
 
     this.year = +this.route.snapshot.params["year"];
     this.month = +this.route.snapshot.params["month"];

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { map, tap, take, exhaustMap } from 'rxjs/operators';
 
 import { EventModel } from '../events/event.model';
@@ -16,19 +16,26 @@ export class DataStorageService {
 
   storeEvents() {
     const events = this.eventService.getEvents();
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+    
     this.http
-      .put(
-        'https://calendareventsui.firebaseio.com/events.json',
-        events
+      .post(
+        'http://localhost:5000/api/events/',
+        events,
+        httpOptions
       )
-      .subscribe(response => {
-        console.log(response);
+      .subscribe(response => {        
       });
   }
 
   fetchEvents() {
     return this.http.get<EventModel[]>(
-      'https://calendareventsui.firebaseio.com/events.json'
+      'http://localhost:5000/api/events/'
     )
     .pipe(    
       map(events => {

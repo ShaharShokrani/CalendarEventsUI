@@ -25,8 +25,7 @@ export class EventDetailComponent implements OnInit {
           this.id = params['id'];
           this.eventModel = this.eventService.getEventModel(this.id);
         }
-      )
-    console.log("EventDetailsComponent.ngOnInit");
+      )    
   }
 
   onSelect(mode: string) {
