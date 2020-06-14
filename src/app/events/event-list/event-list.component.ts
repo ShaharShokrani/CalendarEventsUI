@@ -6,16 +6,18 @@ import timeGrigPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
 import { EventInput, EventApi, Calendar, View } from '@fullcalendar/core';
 
-import { EventService } from '../events.service';
+import { EventService } from '../event.service';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { FullCalendarComponent } from '@fullcalendar/angular';
+import { EventModel } from '../event.model';
+import { ToolbarInput } from '@fullcalendar/core/types/input-types';
 
 @Component({
   selector: 'app-events-list',
-  templateUrl: './events-list.component.html',
-  styleUrls: ['./events-list.component.css']
+  templateUrl: './event-list.component.html',
+  styleUrls: ['./event-list.component.css']
 })
-export class EventsListComponent implements OnInit, AfterViewInit, OnDestroy {
+export class EventListComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('calendar', {'static': true}) calendarComponent: FullCalendarComponent;
   calendarApi: Calendar;
   defaultDate = new Date();
@@ -27,7 +29,7 @@ export class EventsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private eventsChangedSubscription: Subscription;
   private navigatedToEditSubscription: Subscription;
-  events: EventInput[];  
+  eventsInputs: EventInput[];  
 
   constructor(private eventService: EventService,
     private router: Router,
@@ -37,11 +39,32 @@ export class EventsListComponent implements OnInit, AfterViewInit, OnDestroy {
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
   calendarWeekends = true;
 
+  convertEventModelToEventInput(eventsModels: EventModel[]): EventInput[] {
+    return Array.from(eventsModels, eventModel => {
+      const eventInput: EventInput = {
+        id: eventModel.id,
+        start: eventModel.start,              
+        title: eventModel.title,
+        extendedProps: {
+          "updateDate": eventModel.updateDate,
+          "imagePath": eventModel.imagePath,
+          "details": eventModel.details,
+          "description": eventModel.description
+        }
+      };
+      return eventInput;
+    });
+  }
+  private toolBarInput : ToolbarInput = {    
+    left: 'prev,next today',
+    center: 'title',
+    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+  }
   ngAfterViewInit() { 
     //TODO: Add an issue to understand the difference between ngOnInit vs ngAfterViewInit usage.
     this.calendarApi = this.calendarComponent.getApi();
-    console.log(this.calendarComponent);
-    console.log(this.calendarApi);
+    this.calendarComponent.header = this.toolBarInput;
+    this.calendarComponent.plugins = [ 'calendarPlugins', 'dayGrid', 'timeGrid' ];        
     
     this.navigatedToEditSubscription = this.eventService.navigatedToEdit
       .subscribe(
@@ -52,10 +75,10 @@ export class EventsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.eventsChangedSubscription = this.eventService.eventsChanged
       .subscribe(
-        (events: EventInput[]) => {
-          this.events = events;
+        (eventsModels: EventModel[]) => {
+          this.eventsInputs = this.convertEventModelToEventInput(eventsModels)
         }
-      );
+    );
 
     this.route.params
       .subscribe(
@@ -77,9 +100,8 @@ export class EventsListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       )
   }
-  ngOnInit() {
-    console.log("EventListComponent.ngOnInit");
-    this.events = this.eventService.getEvents();
+  ngOnInit() {    
+    this.eventsInputs = this.eventService.getEvents();
   }
 
   onViewItem(id: string) {
@@ -87,22 +109,12 @@ export class EventsListComponent implements OnInit, AfterViewInit, OnDestroy {
       .next(id);
   }
 
-  handleEventClick(model: {el: Object, event: EventApi, jsEvent: MouseEvent, view: DayGridView}) {
-    console.log(model);
+  handleEventClick(model: {el: Object, event: EventApi, jsEvent: MouseEvent, view: DayGridView}) {    
     this.onViewItem(model.event.id);
-
-    console.log("this.calendarComponent");
-    console.log(this.calendarComponent.defaultDate);
   } 
 
   handleDatesRender(arg: {view: View, el: HTMLElement }): void {
-    let currentStart = arg.view.currentStart;
-    
-    console.log("params:");
-    console.log(this.route.params);
-
-    console.log("router:");
-    console.log(this.router);
+    let currentStart = arg.view.currentStart;    
 
     this.year = +this.route.snapshot.params["year"];
     this.month = +this.route.snapshot.params["month"];

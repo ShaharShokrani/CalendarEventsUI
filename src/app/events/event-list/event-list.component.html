@@ -4,13 +4,12 @@
   [plugins]="calendarPlugins"
   [weekends]="true"
   deepChangeDetection="true"
-  [events]="events"
+  [events]="eventsInputs"
   [defaultDate]="defaultDate"
   [timeZone]="timeZone"
   (datesRender)="handleDatesRender($event)"
   (eventClick)="handleEventClick($event)">
 </full-calendar>
-
 <!-- <div *ngIf="options">
   <ng-fullcalendar 
   #fullcalendar [options]="options" 

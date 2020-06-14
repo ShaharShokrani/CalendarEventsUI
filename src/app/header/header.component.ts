@@ -1,27 +1,45 @@
-import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { EventService } from '../events/events.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { EventService } from '../events/event.service';
+import { DataStorageService } from '../shared/data-storage.service';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html'
   // styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
-  // @Output() featureSelected = new EventEmitter<string>();
-  // collapsed = true;
-  constructor(private router: Router,
-    private route: ActivatedRoute,
-    private eventService: EventService) { }
+export class HeaderComponent implements OnInit, OnDestroy{
+  isAuthenticated = false;
+  private userSub: Subscription;
+  collapsed: boolean = false;
+    
+  constructor(
+    private eventService: EventService,
+    private dataStorageService: DataStorageService,
+    private authService: AuthService ) { }
 
-  // ngOnInit() {
-  //   console.log("HeaderComponent.ngOnInit");
-  // }
-
+  ngOnInit() {
+    this.userSub = this.authService.authNavStatus$.subscribe(isAuthenticated => {
+      this.isAuthenticated = isAuthenticated;
+    });
+  }
+  onSaveData() {
+    this.dataStorageService.storeEvents();
+  }
+  onFetchData() {
+    this.dataStorageService.fetchEvents().subscribe();
+  }
   onNewClick() {
     this.eventService.navigateToEdit("./new");
   }
-  // onSelect(feature: string) {
-  //   this.featureSelected.emit(feature);
-  // }
+  onLogout() {
+    this.authService.logout();
+  }
+  ngOnDestroy() {
+    this.userSub.unsubscribe();
+  }
+  onAuthenticateClick() {
+    this.authService.login();
+  }
 }

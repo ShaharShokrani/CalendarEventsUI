@@ -1,20 +1,22 @@
 import { DateInput } from '@fullcalendar/core/datelib/env';
 
 export class EventModel {
-  public id: string | number;
+  public id: string;
   public imagePath: string;  
   public updateDate: Date;
   public title: string;
   public description: string;
   public start: DateInput;
+  public details: any[];
 
   constructor(
-    id: string | number,
+    id: string,
     imagePath: string,     
     updateDate: Date,
     title: string, 
     start: DateInput,
-    description: string
+    description: string,
+    details: any[]
   ) 
   {
     this.id = id;
@@ -23,5 +25,6 @@ export class EventModel {
     this.title = title;
     this.start = start;  
     this.description = description;
+    this.details = details;
   }
 }

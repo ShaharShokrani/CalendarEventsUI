@@ -1,46 +1,33 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { FullCalendarModule } from '@fullcalendar/angular'; // for FullCalendar!
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.model';
 
 import { HeaderComponent } from './header/header.component';
 
-import { EventsComponent } from './events/events.component';
-import { EventsListComponent } from './events/events-list/events-list.component';
-import { EventDetailComponent } from './events/event-detail/event-detail.component';
-import { EventEditComponent } from './events/event-edit/event-edit.component';
-import { EventItemComponent } from './events/events-list/event-item/event-item.component';
-import { EventStartComponent } from './events/event-start/event-start.component';
-import { DropdownDirective } from './shared/dropdown.directive';
 import { AboutComponent } from './about/about.component'
-import { EventService } from './events/events.service';
+import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from './shared/shared.module';
+import { CoreModule } from './core.module';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
-  declarations: [
-    DropdownDirective,
+  declarations: [    
     AppComponent,
     HeaderComponent,
-    EventsComponent,
-    EventsListComponent,
-    EventDetailComponent,
-    EventEditComponent,
-    EventItemComponent,
-    EventStartComponent,
     AboutComponent
   ],
-  imports: [
+  imports: [    
     BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpModule,
-    FullCalendarModule,
-    AppRoutingModule
+    HttpModule, 
+    AppRoutingModule,    
+    HttpClientModule,    
+    SharedModule,
+    CoreModule,
+    AuthModule
   ],
-  providers: [EventService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
