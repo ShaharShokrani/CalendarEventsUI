@@ -12,21 +12,26 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core.module';
 import { AuthModule } from './auth/auth.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { SignupComponent } from './signup/signup.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [    
     AppComponent,
     HeaderComponent,
-    AboutComponent
+    SignupComponent,
+    AboutComponent    
   ],
   imports: [    
     BrowserModule,
     HttpModule, 
+    FormsModule,
     AppRoutingModule,    
-    HttpClientModule,    
+    HttpClientModule,
     SharedModule,
     CoreModule,
-    AuthModule
+    AuthModule,    
   ],
   bootstrap: [AppComponent]
 })

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { EventService } from '../events/event.service';
 import { DataStorageService } from '../shared/data-storage.service';
 import { Subscription } from 'rxjs';
-import { AuthService } from '../auth/auth.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
   constructor(
     private eventService: EventService,
     private dataStorageService: DataStorageService,
-    private authService: AuthService ) { }
+    private authService: AuthenticationService ) { }
 
   ngOnInit() {
     this.userSub = this.authService.authNavStatus$.subscribe(isAuthenticated => {
@@ -33,13 +33,13 @@ export class HeaderComponent implements OnInit, OnDestroy{
   onNewClick() {
     this.eventService.navigateToEdit("./new");
   }
+  onSignInClick() {
+    this.authService.signin();
+  }
   onLogout() {
-    this.authService.logout();
+    this.authService.signout();
   }
   ngOnDestroy() {
     this.userSub.unsubscribe();
-  }
-  onAuthenticateClick() {
-    this.authService.login();
   }
 }

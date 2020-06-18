@@ -39,8 +39,7 @@ export class EventService {
             // this.events.map(event => {
             //     var temp = Object.assign({}, event);
             //     if (temp.id === id) {
-            //         temp.title = eventModel.title;                
-            //     }
+            //         temp.title = eventModel.title;                       //     }
             //     return temp;
             // });        
             this.eventsChanged.next(this.events.slice());
