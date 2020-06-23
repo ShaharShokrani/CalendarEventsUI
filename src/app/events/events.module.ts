@@ -9,6 +9,7 @@ import { EventEditComponent } from './event-edit/event-edit.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { EventsRoutingModule } from './events-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { CoreModule } from '../core.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { SharedModule } from '../shared/shared.module';
     ReactiveFormsModule, 
     FullCalendarModule,    
     EventsRoutingModule,
+    CoreModule,
     SharedModule
   ],
   exports: [

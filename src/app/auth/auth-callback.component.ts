@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AuthService } from './auth.service';
+import { AuthenticationService } from '../services/authentication.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -10,7 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class AuthCallbackComponent implements OnInit {
   error: boolean;
 
-  constructor(private authService: AuthService, 
+  constructor(private authService: AuthenticationService, 
     private router: Router, 
     private route: ActivatedRoute) {}
 

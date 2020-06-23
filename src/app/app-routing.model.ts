@@ -1,22 +1,30 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { AboutComponent } from './about/about.component';
-import { AuthCallbackComponent } from './auth/auth-callback.component';
+import { AccountModule } from './account/account.module';
+import { AccountComponent } from './account/account.component';
 
 const appRoutes : Routes = [
-    { path: '', redirectTo: '/events' , pathMatch: 'full'},    
+    { path: '', redirectTo: '/events' , pathMatch: 'full'},
     {
         path: "events",
         loadChildren: () =>
           import("./events/events.module").then(m => m.EventsModule)
     },
-    {//TODO: Ask about why when un-commenting this code it won't work perform a StackBlitz.
+    {
         path: "auth-callback",
         loadChildren: () =>
-          import("./auth/auth.module").then(m => m.AuthModule)
+        import("./auth/auth.module").then(m => m.AuthModule)
     },
-    //{ path: 'auth-callback', component: AuthCallbackComponent, pathMatch: 'prefix'},
-    { path: 'about', component: AboutComponent, pathMatch: 'prefix'}
+    {
+        path: "account",
+        component: AccountComponent
+    },
+    {
+        path: "about",
+        pathMatch: 'prefix',
+        component: AboutComponent
+    }
 ]
 
 @NgModule({

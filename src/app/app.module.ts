@@ -7,25 +7,30 @@ import { AppRoutingModule } from './app-routing.model';
 
 import { HeaderComponent } from './header/header.component';
 
-import { AboutComponent } from './about/about.component'
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
-import { CoreModule } from './core.module';
 import { AuthModule } from './auth/auth.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AboutComponent } from './about/about.component';
+import { AccountComponent } from './account/account.component';
+import { SignUpComponent } from './account/signup/signup.component';
 
 @NgModule({
-  declarations: [    
+  declarations: [  
+    SignUpComponent,      
+    AboutComponent, 
+    AccountComponent,
     AppComponent,
-    HeaderComponent,
-    AboutComponent
+    HeaderComponent
   ],
-  imports: [    
-    BrowserModule,
-    HttpModule, 
+  imports: [
+    HttpModule,
+    BrowserModule,    
     AppRoutingModule,    
-    HttpClientModule,    
-    SharedModule,
-    CoreModule,
+    HttpClientModule,
+    SharedModule,    
+    FormsModule,
+    ReactiveFormsModule,
     AuthModule
   ],
   bootstrap: [AppComponent]
