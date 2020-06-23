@@ -6,12 +6,11 @@ import { EventModel } from '../events/event.model';
 import { EventService } from '../events/event.service';
 import { AuthenticationService } from '../services/authentication.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class DataStorageService {
   constructor(
     private http: HttpClient, 
-    private eventService: EventService,
-    private authService: AuthenticationService
+    private eventService: EventService    
   ) {}
 
   storeEvents() {

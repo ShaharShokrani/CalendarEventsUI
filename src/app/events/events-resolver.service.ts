@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import {
   Resolve,
   ActivatedRouteSnapshot,
@@ -8,8 +7,9 @@ import {
 import { EventModel } from './event.model';
 import { DataStorageService } from '../shared/data-storage.service';
 import { EventService } from './event.service';
+import { Injectable } from '@angular/core';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class EventsResolverService implements Resolve<EventModel[]> {
   constructor(
     private dataStorageService: DataStorageService,

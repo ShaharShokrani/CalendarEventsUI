@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { AboutComponent } from './about/about.component';
+import { AccountModule } from './account/account.module';
+import { AccountComponent } from './account/account.component';
 
 const appRoutes : Routes = [
-    { path: '', redirectTo: '/events' , pathMatch: 'full'},    
+    { path: '', redirectTo: '/events' , pathMatch: 'full'},
     {
         path: "events",
         loadChildren: () =>
@@ -14,15 +17,13 @@ const appRoutes : Routes = [
         import("./auth/auth.module").then(m => m.AuthModule)
     },
     {
-        path: "signup",
-        loadChildren: () =>
-        import("./signup/signup.component").then(m => m.SignupComponent)
+        path: "account",
+        component: AccountComponent
     },
     {
         path: "about",
         pathMatch: 'prefix',
-        loadChildren: () =>
-        import("./about/about.component").then(m => m.AboutComponent)
+        component: AboutComponent
     }
 ]
 

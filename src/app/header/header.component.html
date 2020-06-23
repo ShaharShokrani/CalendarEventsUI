@@ -10,9 +10,8 @@
             <ul class="nav navbar-nav">
                 <li routerLinkActive="active"><a style="cursor: pointer;" routerLink="/events">Events</a></li>
                 <li routerLinkActive="active"><a style="cursor: pointer;" (click)="onNewClick()">New</a></li>
-                <li routerLinkActive="active"><a style="cursor: pointer;" routerLink="/about">About</a></li>
-                <li routerLinkActive="active"><a style="cursor: pointer;" (click)="onSignInClick()">Sign In</a></li>
-                <li routerLinkActive="active"><a style="cursor: pointer;" routerLink="/signup">Sign Up</a></li>
+                <li routerLinkActive="active"><a style="cursor: pointer;" routerLink="/about">About</a></li>                
+                <li routerLinkActive="active"><a style="cursor: pointer;" routerLink="/account">Account</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li *ngIf="isAuthenticated">

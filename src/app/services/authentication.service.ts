@@ -18,10 +18,10 @@ export class AuthenticationService extends BaseService  {
   // Observable navItem stream
   authNavStatus$ = this._authNavStatusSource.asObservable();
 
-  private manager = new UserManager(getClientSettings());
+  private manager = new UserManager(this.getClientSettings());
   private user: User | null;
 
-  constructor(private http: HttpClient, private configService: ConfigService) { 
+  constructor(private http: HttpClient, private _configService: ConfigService) { 
     super();     
     
     this.manager.getUser().then(user => { 
@@ -40,7 +40,8 @@ export class AuthenticationService extends BaseService  {
   }  
 
   register(userRegistration: any) {    
-    return this.http.post(this.configService.authApiURI + '/account', userRegistration).pipe(catchError(this.handleError));
+    return this.http.post('https://localhost:5001/account/register', userRegistration);
+    //.pipe(catchError(this.handleError));
   }
 
   isAuthenticated(): boolean {
@@ -58,19 +59,19 @@ export class AuthenticationService extends BaseService  {
   async signout() {
     await this.manager.signoutRedirect();
   }
-}
 
-export function getClientSettings(): UserManagerSettings {
-  return {
-      authority: Constants.stsAuthority,
-      client_id: Constants.clientId,
-      redirect_uri: 'http://localhost:4200/auth-callback',
-      post_logout_redirect_uri: 'http://localhost:4200/',
-      response_type:"id_token token",
-      scope:"openid profile email calendareventsapi.post",
-      filterProtocolClaims: true,
-      loadUserInfo: true,
-      automaticSilentRenew: true,      
-      silent_redirect_uri: 'http://localhost:4200/silent-refresh.html'
-  };
+  getClientSettings(): UserManagerSettings {
+    return {
+        authority: this._configService.authApiURI,
+        client_id: this._configService.clinetId,
+        redirect_uri: 'http://localhost:4200/auth-callback',
+        post_logout_redirect_uri: 'http://localhost:4200/',
+        response_type:"id_token token",
+        scope:"openid profile email calendareventsapi.post",
+        filterProtocolClaims: true,
+        loadUserInfo: true,
+        automaticSilentRenew: true,      
+        silent_redirect_uri: 'http://localhost:4200/silent-refresh.html'
+    };
+  }
 }

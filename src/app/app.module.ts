@@ -7,31 +7,31 @@ import { AppRoutingModule } from './app-routing.model';
 
 import { HeaderComponent } from './header/header.component';
 
-import { AboutComponent } from './about/about.component'
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
-import { CoreModule } from './core.module';
 import { AuthModule } from './auth/auth.module';
-import { NgxSpinnerModule } from 'ngx-spinner';
-import { SignupComponent } from './signup/signup.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AboutComponent } from './about/about.component';
+import { AccountComponent } from './account/account.component';
+import { SignUpComponent } from './account/signup/signup.component';
 
 @NgModule({
-  declarations: [    
+  declarations: [  
+    SignUpComponent,      
+    AboutComponent, 
+    AccountComponent,
     AppComponent,
-    HeaderComponent,
-    SignupComponent,
-    AboutComponent    
+    HeaderComponent
   ],
-  imports: [    
-    BrowserModule,
-    HttpModule, 
-    FormsModule,
+  imports: [
+    HttpModule,
+    BrowserModule,    
     AppRoutingModule,    
     HttpClientModule,
-    SharedModule,
-    CoreModule,
-    AuthModule,    
+    SharedModule,    
+    FormsModule,
+    ReactiveFormsModule,
+    AuthModule
   ],
   bootstrap: [AppComponent]
 })
