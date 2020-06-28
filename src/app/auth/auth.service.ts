@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
 import { UserManager, UserManagerSettings, User } from 'oidc-client';
 import { BehaviorSubject } from 'rxjs'; 
 
-import { Constants } from '../shared/constants';
 import { BaseService } from '../shared/base.service';
 import { ConfigService } from '../shared/config.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService extends BaseService  {
+export class AuthService extends BaseService  {
 
   // Observable navItem source
   private _authNavStatusSource = new BehaviorSubject<boolean>(false);
@@ -62,15 +60,14 @@ export class AuthenticationService extends BaseService  {
 
   getClientSettings(): UserManagerSettings {
     return {
-        authority: this._configService.authApiURI,
-        client_id: this._configService.clinetId,
-        redirect_uri: 'http://localhost:4200/auth-callback',
-        post_logout_redirect_uri: 'http://localhost:4200/',
-        response_type:"id_token token",
+        authority: this._configService.authority,
+        client_id: this._configService.client_id,
+        redirect_uri: 'http://localhost:4200/signin-callback',
+        post_logout_redirect_uri: 'http://localhost:4200/signout-callback',
+        response_type:"code",
         scope:"openid profile email calendareventsapi.post",
-        filterProtocolClaims: true,
-        loadUserInfo: true,
-        automaticSilentRenew: true,      
+        automaticSilentRenew: true,
+        client_secret: null,
         silent_redirect_uri: 'http://localhost:4200/silent-refresh.html'
     };
   }

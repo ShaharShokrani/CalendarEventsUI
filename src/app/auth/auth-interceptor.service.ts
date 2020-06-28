@@ -6,12 +6,12 @@ import {
     HttpParams,
     HttpHeaders
 } from '@angular/common/http';
-import { AuthenticationService } from '../services/authentication.service';
 import { take, exhaustMap } from 'rxjs/operators';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
-    constructor(private authService: AuthenticationService) {}
+    constructor(private authService: AuthService) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler) {
         const authorizationHeader = this.authService.authorizationHeaderValue;

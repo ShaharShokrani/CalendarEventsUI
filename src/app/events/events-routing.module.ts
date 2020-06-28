@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { EventsComponent } from './events.component';
-import { AuthGuard } from '../services/auth.guard';
 import { EventStartComponent } from './event-start/event-start.component';
 import { EventEditComponent } from './event-edit/event-edit.component';
 import { EventDetailComponent } from './event-detail/event-detail.component';
 import { EventsResolverService } from './events-resolver.service';
+import { AuthGuard } from '../auth/auth.guard';
 
 const children = [
     { path: '', component: EventStartComponent },

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Subscription } from 'rxjs';
-import { AuthenticationService } from '../services/authentication.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +13,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
   private userSub: Subscription;
   collapsed: boolean = false;
     
-  constructor(private authService: AuthenticationService ) { }
+  constructor(private authService: AuthService ) { }
 
   ngOnInit() {
     this.userSub = this.authService.authNavStatus$.subscribe(isAuthenticated => {

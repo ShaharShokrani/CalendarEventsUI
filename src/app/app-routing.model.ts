@@ -12,7 +12,12 @@ const appRoutes : Routes = [
           import("./events/events.module").then(m => m.EventsModule)
     },
     {
-        path: "auth-callback",
+        path: "signin-callback",
+        loadChildren: () =>
+        import("./auth/auth.module").then(m => m.AuthModule)
+    },
+    {
+        path: "signout-callback",
         loadChildren: () =>
         import("./auth/auth.module").then(m => m.AuthModule)
     },

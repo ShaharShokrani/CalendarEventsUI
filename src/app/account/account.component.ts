@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../services/authentication.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({  
   templateUrl: './account.component.html',  
@@ -7,7 +7,7 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 export class AccountComponent implements OnInit {
 
-  constructor(private authService: AuthenticationService) { }
+  constructor(private authService: AuthService) { }
   ngOnInit() {
   }
   onSignInClick() {

@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AuthenticationService } from '../services/authentication.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
-  selector: 'app-auth-callback',
-  templateUrl: './auth-callback.component.html',  
+  selector: 'app-signin-callback',
+  templateUrl: './signin-callback.component.html',  
 })
-export class AuthCallbackComponent implements OnInit {
+export class SignInCallbackComponent implements OnInit {
   error: boolean;
 
-  constructor(private authService: AuthenticationService, 
-    private router: Router, 
+  constructor(private authService: AuthService, 
+    private router: Router,
     private route: ActivatedRoute) {}
 
   async ngOnInit() {
