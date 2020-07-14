@@ -1,28 +1,17 @@
-import {
-  Resolve,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot
-} from '@angular/router';
-
-import { EventModel } from './event.model';
-import { DataStorageService } from '../shared/data-storage.service';
-import { EventService } from './event.service';
+import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { EventModelDTO } from './event.model';
+import { EventService } from './events.service';
 
 @Injectable()
-export class EventsResolverService implements Resolve<EventModel[]> {
-  constructor(
-    private dataStorageService: DataStorageService,
-    private eventsService: EventService
+export class EventsResolverService implements Resolve<EventModelDTO[]> {
+  constructor(    
+    private _eventsService: EventService
   ) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const events = this.eventsService.getEvents();
-
-    if (events.length === 0) {
-      return this.dataStorageService.fetchEvents();
-    } else {
-      return events;
-    }
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) : Observable<EventModelDTO[]> {
+    return this._eventsService.getEvents(null);
   }
 }

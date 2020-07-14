@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
  
-@Injectable()
+@Injectable({ 
+    providedIn: 'root' 
+})
 export class ConfigService {    
 
     constructor() {}
 
-    get authApiURI() {
+    get authority() {
         return 'https://localhost:5001/';
     }    
      
@@ -17,7 +19,7 @@ export class ConfigService {
         return 'https://localhost:4200/';
     }
 
-    get clinetId() {
+    get client_id() {
         return 'calendareventsui';
     }
 }

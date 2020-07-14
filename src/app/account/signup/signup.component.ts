@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs/operators'
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserRegistration } from 'src/app/shared/user-registration.model';
 import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -18,7 +18,7 @@ export class SignUpComponent implements OnInit {
 
   signUpForm: FormGroup;
 
-  constructor(private _authenticationService: AuthenticationService, private spinner: NgxSpinnerService) {   
+  constructor(private _authenticationService: AuthService, private spinner: NgxSpinnerService) {   
   }
 
   ngOnInit() {
