@@ -65,7 +65,7 @@ export class AuthService extends BaseService  {
         redirect_uri: 'http://localhost:4200/signin-callback',
         post_logout_redirect_uri: 'http://localhost:4200/signout-callback',
         response_type:"code",
-        scope:"openid profile email calendareventsapi.post",
+        scope:"openid profile email calendareventsapi",
         automaticSilentRenew: true,
         client_secret: null,
         silent_redirect_uri: 'http://localhost:4200/silent-refresh.html'

@@ -7,17 +7,18 @@ import { EventEditComponent } from './event-edit/event-edit.component';
 import { EventDetailComponent } from './event-detail/event-detail.component';
 import { EventsResolverService } from './events-resolver.service';
 import { AuthGuard } from '../auth/auth.guard';
+import { EventResolverService } from './event-resolver.service';
 
 const children = [
     { path: '', component: EventStartComponent },
     { path: 'new', component: EventEditComponent, canActivate: [AuthGuard] },
-    { path: ':id', component: EventDetailComponent, resolve: [EventsResolverService] },
-    { path: ':id/edit', component: EventEditComponent, resolve: [EventsResolverService], canActivate: [AuthGuard] }
+    { path: ':id', component: EventDetailComponent, resolve: {eventResolverService : EventResolverService} },
+    { path: ':id/edit', component: EventEditComponent, canActivate: [AuthGuard], resolve: {eventResolverService : EventResolverService} }
 ];
 
 const routes: Routes = [  
   { path: '', component: EventsComponent, children: children},
-  { path: ':year/:month/:day', component: EventsComponent, children: children}
+  { path: ':year/:month/:day', component: EventsComponent, children: children, resolve: {eventsResolverService : EventsResolverService}}
 ];
 
 @NgModule({

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Params, ActivatedRoute, Router } from '@angular/router';
-import { EventService } from '../event.service';
+import { EventService } from '../events.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { EventModelDTO } from '../event.model';
 
 @Component({
   selector: 'app-event-edit',
@@ -46,21 +47,31 @@ export class EventEditComponent implements OnInit {
     let eventTitle = '';
     let eventImagePath = '';
     let eventDescription = '';
-    let evenrStart = new Date();
+    let eventStart = new Date();
+    let eventEnd = new Date();
+    let eventIsAllDay = false;
+    let eventUrl = '';
 
     if (this.editMode) {
-      const eventModel = this.eventService.getEventModel(this.id);
+      const eventModel = new EventModelDTO("x","x",null,"s",null,null,"a",true,"s",null); //this.eventService.getEventModel(this.id);
+
       eventTitle = eventModel.title;
       eventImagePath = eventModel.imagePath;
       eventDescription = eventModel.description;
-      evenrStart = <Date>eventModel.start;
+      eventStart = <Date>eventModel.start;
+      eventEnd = <Date>eventModel.end;
+      eventIsAllDay = eventModel.isAllDay;
+      eventUrl = eventModel.url;
     }
     
     this.eventForm = new FormGroup({
       'title': new FormControl(eventTitle, Validators.required),
-      'start': new FormControl(evenrStart, Validators.required),
+      'start': new FormControl(eventStart, Validators.required),
+      'end': new FormControl(eventEnd, Validators.required),
+      'isAllDay': new FormControl(eventIsAllDay, Validators.required),
       'imagePath': new FormControl(eventImagePath, Validators.required),
-      'description': new FormControl(eventDescription, Validators.required)      
+      'description': new FormControl(eventDescription, Validators.required),
+      'url:': new FormControl(eventUrl)
     });
   }
   onAddItem() {

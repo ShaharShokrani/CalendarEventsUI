@@ -16,12 +16,6 @@ export class SignInCallbackComponent implements OnInit {
 
   async ngOnInit() {
     console.log("AuthCallbackComponent.ngOnInit");
-    // check for error
-    if (this.route.snapshot.fragment.indexOf('error') >= 0) {
-        this.error=true; 
-        return;    
-    }  
-
     await this.authService.completeAuthentication();      
     this.router.navigate(['/events']);
   }

@@ -6,10 +6,10 @@ import timeGrigPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
 import { EventInput, EventApi, Calendar, View } from '@fullcalendar/core';
 
-import { EventService } from '../event.service';
+import { EventService } from '../events.service';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { FullCalendarComponent } from '@fullcalendar/angular';
-import { EventModel } from '../event.model';
+import { EventModelDTO } from '../event.model';
 import { ToolbarInput } from '@fullcalendar/core/types/input-types';
 
 @Component({
@@ -31,15 +31,15 @@ export class EventListComponent implements OnInit, AfterViewInit, OnDestroy {
   private navigatedToEditSubscription: Subscription;
   eventsInputs: EventInput[];  
 
-  constructor(private eventService: EventService,
-    private router: Router,
-    private route: ActivatedRoute) { }
+  constructor(private _eventService: EventService,
+    private _router: Router,
+    private _activatedRoute: ActivatedRoute) { }
 
   calendarVisible = true;
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
   calendarWeekends = true;
 
-  convertEventModelToEventInput(eventsModels: EventModel[]): EventInput[] {
+  convertEventModelToEventInput(eventsModels: EventModelDTO[]): EventInput[] {
     return Array.from(eventsModels, eventModel => {
       const eventInput: EventInput = {
         id: eventModel.id,
@@ -66,21 +66,14 @@ export class EventListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.calendarComponent.header = this.toolBarInput;
     this.calendarComponent.plugins = [ 'calendarPlugins', 'dayGrid', 'timeGrid' ];        
     
-    this.navigatedToEditSubscription = this.eventService.navigatedToEdit
+    this.navigatedToEditSubscription = this._eventService.navigatedToEdit
       .subscribe(
         (path: string) => {          
-          this.router.navigate([path], {relativeTo: this.route});
+          this._router.navigate([path], {relativeTo: this._activatedRoute});
         }
       );
 
-    this.eventsChangedSubscription = this.eventService.eventsChanged
-      .subscribe(
-        (eventsModels: EventModel[]) => {
-          this.eventsInputs = this.convertEventModelToEventInput(eventsModels)
-        }
-    );
-
-    this.route.params
+    this._activatedRoute.params
       .subscribe(
         (params: Params) => {          
           if ((params['year'] && params['month'] && params['day']) &&
@@ -95,17 +88,25 @@ export class EventListComponent implements OnInit, AfterViewInit, OnDestroy {
             let goToDate = new Date(this.year, this.month, this.day);
             this.calendarApi.gotoDate(goToDate);
             //TODO: This navigated repeated here again in case the url has been pasted into the url bar, find a better way to handle it (it should be handled from only one place).
-            this.router.navigate(['events', this.year, this.month, this.day]); 
+            this._router.navigate(['events', this.year, this.month, this.day]); 
           }
         }
       )
   }
   ngOnInit() {    
-    this.eventsInputs = this.eventService.getEvents();
+    const eventsModels = this._activatedRoute.snapshot.data["eventsResolverService"];
+    this.eventsInputs = this.convertEventModelToEventInput(eventsModels);    
+
+    this.eventsChangedSubscription = this._eventService.eventsChanged
+    .subscribe(
+      (eventsModels: EventModelDTO[]) => {
+        this.eventsInputs = this.convertEventModelToEventInput(eventsModels);
+      }
+  );
   }
 
   onViewItem(id: string) {
-    this.eventService.navigatedToEdit
+    this._eventService.navigatedToEdit
       .next(id);
   }
 
@@ -116,9 +117,9 @@ export class EventListComponent implements OnInit, AfterViewInit, OnDestroy {
   handleDatesRender(arg: {view: View, el: HTMLElement }): void {
     let currentStart = arg.view.currentStart;    
 
-    this.year = +this.route.snapshot.params["year"];
-    this.month = +this.route.snapshot.params["month"];
-    this.day = +this.route.snapshot.params["day"];
+    this.year = +this._activatedRoute.snapshot.params["year"];
+    this.month = +this._activatedRoute.snapshot.params["month"];
+    this.day = +this._activatedRoute.snapshot.params["day"];
     //The current navigated in-app route were from inside the calendar datesRender event
     if (this.year != currentStart.getFullYear() ||
         this.month != (currentStart.getMonth() + 1) ||
@@ -126,7 +127,7 @@ export class EventListComponent implements OnInit, AfterViewInit, OnDestroy {
           this.year = currentStart.getFullYear();
           this.month = (currentStart.getMonth() + 1);
           this.day = currentStart.getDate();
-          this.router.navigate(['events', this.year, this.month, this.day]);
+          this._router.navigate(['events', this.year, this.month, this.day]);
     }
   }
 

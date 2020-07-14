@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { AboutComponent } from './about/about.component';
-import { AccountModule } from './account/account.module';
 import { AccountComponent } from './account/account.component';
 
 const appRoutes : Routes = [
