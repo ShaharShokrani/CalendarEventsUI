@@ -9,7 +9,7 @@ import { EventModelDTO } from '../event.model';
   templateUrl: './event-edit.component.html',
   styleUrls: ['./event-edit.component.css']
 })
-export class EventEditComponent implements OnInit {  
+export class EventEditComponent implements OnInit {
 
   id: string;
   editMode = false;
@@ -17,7 +17,7 @@ export class EventEditComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private eventService: EventService) { } 
+    private eventService: EventService) { }
 
   ngOnInit() {
     this.route.params
@@ -25,12 +25,13 @@ export class EventEditComponent implements OnInit {
         (params: Params) => {
           this.id = params['id'];
           this.editMode = params['id'] != null;
-          this.initForm();          
+          this.initForm();
         }
-      )    
+      )
   }
-  onSubmit() {    
+  onSubmit() {
     if (this.editMode) {
+      console.log(this.eventForm.value)
       this.eventService.updateEvent(this.id, this.eventForm.value);
     }
     else {
@@ -40,7 +41,11 @@ export class EventEditComponent implements OnInit {
   }
   onCancel() {
     //Go up one level, if we were editing this will take us details
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.router.navigate(['../'], { relativeTo: this.route });
+  }
+
+  onChange() {
+    console.log(this.eventForm)
   }
 
   initForm() {
@@ -53,7 +58,7 @@ export class EventEditComponent implements OnInit {
     let eventUrl = '';
 
     if (this.editMode) {
-      const eventModel = new EventModelDTO("x","x",null,"s",null,null,"a",true,"s",null); //this.eventService.getEventModel(this.id);
+      const eventModel = new EventModelDTO("x", "x", null, "s", null, null, "a", true, "s", null); //this.eventService.getEventModel(this.id);
 
       eventTitle = eventModel.title;
       eventImagePath = eventModel.imagePath;
@@ -63,7 +68,7 @@ export class EventEditComponent implements OnInit {
       eventIsAllDay = eventModel.isAllDay;
       eventUrl = eventModel.url;
     }
-    
+
     this.eventForm = new FormGroup({
       'title': new FormControl(eventTitle, Validators.required),
       'start': new FormControl(eventStart, Validators.required),
@@ -71,7 +76,7 @@ export class EventEditComponent implements OnInit {
       'isAllDay': new FormControl(eventIsAllDay, Validators.required),
       'imagePath': new FormControl(eventImagePath, Validators.required),
       'description': new FormControl(eventDescription, Validators.required),
-      'url:': new FormControl(eventUrl)
+      'url': new FormControl(eventUrl)
     });
   }
   onAddItem() {

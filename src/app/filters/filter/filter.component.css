@@ -1,0 +1,20 @@
+.card{
+    float:left;
+    margin: 0 10px 10px 0; 
+    
+}
+.expandCollapseContent{
+    position:absolute;
+    background-color: white;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 3px 3px 5px #ddd;
+    z-index: 10;
+}
+
+input[type=checkbox], input[type=radio]{
+    margin: 4px 5px 0 0;
+    position: relative;
+    top:2px;
+}

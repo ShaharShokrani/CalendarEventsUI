@@ -56,9 +56,9 @@ export class SignUpComponent implements OnInit {
     
     var errors: {[s: string]: boolean} = {};
 
-    if (control.value.length > 20)
+    if (control.value && control.value.length > 20)
       errors["MaxRuleValidation"] = true;
-    if (control.value.length < 6)
+    if (control.value && control.value.length < 6)
       errors["MinRuleValidation"] = true;
     if (!this.hasLowerCase(control.value))
       errors["LowerRuleValidation"] = true;
@@ -67,7 +67,7 @@ export class SignUpComponent implements OnInit {
     if (!this.hasSpecial(control.value))
       errors["SpecialRuleValidation"] = true;
     
-    if (Object.keys(errors).length !== 0)
+    if (errors && Object.keys(errors).length !== 0)
       return errors;
     
     return null; // If there is no error at al the errors list should be null.

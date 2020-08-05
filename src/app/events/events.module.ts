@@ -16,30 +16,37 @@ import { EventsResolverService } from './events-resolver.service';
 import { AuthInterceptorService } from '../auth/auth-interceptor.service';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { EventResolverService } from './event-resolver.service';
+import { FiltersComponent } from '../filters/filters.component';
+import { FilterComponent } from '../filters/filter/filter.component'
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 @NgModule({
   declarations: [
     EventsComponent,
     EventListComponent,
-    EventDetailComponent,    
+    EventDetailComponent,
     EventStartComponent,
     EventEditComponent,
-    EventFilterComponent
+    EventFilterComponent,
+    FiltersComponent,
+    FilterComponent
   ],
   imports: [
-    ReactiveFormsModule, 
-    FullCalendarModule,    
+    ReactiveFormsModule,
+    FullCalendarModule,
     EventsRoutingModule,
-    SharedModule    
+    SharedModule,
+    OwlDateTimeModule, 
+    OwlNativeDateTimeModule
   ],
   exports: [
     EventsRoutingModule
   ],
   providers: [
     EventsAPIService,
-    EventService,    
+    EventService,
     EventsResolverService,
     EventResolverService
   ]
 })
-export class EventsModule {}
+export class EventsModule { }

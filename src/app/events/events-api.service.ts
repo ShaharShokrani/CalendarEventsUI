@@ -10,27 +10,27 @@ import { Observable, EMPTY } from 'rxjs';
 export class EventsAPIService {
   fetchEvents$: Observable<EventModelDTO[]>[] = [];
 
-  constructor (
-    private _httpClient: HttpClient,     
+  constructor(
+    private _httpClient: HttpClient,
     private _configService: ConfigService
-  ) {}
+  ) { }
 
-  postEvents(events: EventModelDTO[]) : Observable<EventModelDTO[]> {
+  postEvents(events: EventModelDTO[]): Observable<EventModelDTO[]> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json'
+        'Content-Type': 'application/json'
       })
     };
-    
+
     return this._httpClient
       .post<EventModelDTO[]>(
-         this._configService.resourceApiURI + 'events/',
+        this._configService.resourceApiURI + 'events/',
         events,
         httpOptions
       );
   }
 
-  getEvents(filter: string) : Observable<EventModelDTO[]> {
+  getEvents(): Observable<EventModelDTO[]> {
     return this._httpClient
       .get<EventModelDTO[]>(
         this._configService.resourceApiURI + 'events/'
@@ -53,11 +53,11 @@ export class EventsAPIService {
     //       return EMPTY;
     //     })
     //   );
-    
+
     // return this.fetchEvents$[filter];
   }
 
-  getEventById(id: string) : Observable<EventModelDTO> {
+  getEventById(id: string): Observable<EventModelDTO> {
     return this._httpClient
       .get<EventModelDTO>(
         this._configService.resourceApiURI + 'events/' + id

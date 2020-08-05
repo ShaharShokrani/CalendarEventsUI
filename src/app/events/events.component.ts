@@ -10,6 +10,5 @@ export class EventsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log("EventsComponent");
   }
 }

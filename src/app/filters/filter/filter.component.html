@@ -1,0 +1,19 @@
+<div class="card">
+  <div class="card-block">
+    <div class="expandCollapse">
+      <button type="button" class="btn btn-outline-primary" (click)="toggle($event)"> {{ filter.name | titlecase }}
+      </button>
+    </div>
+    <div class="expandCollapseContent" *ngIf="showContent">
+      <form [formGroup]="filterForm" (change)="onChange()">
+        <div *ngIf="filter.type == 'checkbox'">
+          <div class="form-check" *ngFor="let option of filter.options; let i = index">
+            <input type="checkbox" formControlName={{option}} value={{option}} class="form-check-input" id={{option}}
+              ngModule>
+            <label class="form-check-label" for={{option}}>{{option | titlecase }}</label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

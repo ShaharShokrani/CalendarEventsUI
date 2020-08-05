@@ -7,24 +7,25 @@ import { map, tap } from 'rxjs/operators';
 @Injectable()
 export class EventService {
     eventsChanged = new Subject<EventModelDTO[]>();
-    navigatedToEdit = new Subject<string>();    
+    navigatedToEdit = new Subject<string>();
     private events: EventModelDTO[] = [];
-    
-    constructor(private _eventsAPIService: EventsAPIService) {}
+    private filters: any = {}
+
+    constructor(private _eventsAPIService: EventsAPIService) { }
 
     setEvents(events: EventModelDTO[]) {
         this.events = events;
         this.eventsChanged.next(this.events.slice());
     }
-    getEvents(filter: string) : Observable<EventModelDTO[]> {
-        if (this.events.length !== 0) {
+    getEvents(): Observable<EventModelDTO[]> {
+        if (this.events && this.events.length !== 0) {
             return of(this.events);
         }
         else {
-            return this._eventsAPIService.getEvents(filter);
+            return this._eventsAPIService.getEvents();
         }
     }
-    getEventById(id: string) : Observable<EventModelDTO> {
+    getEventById(id: string): Observable<EventModelDTO> {
         var event = this.events.find(x => x.id === id);
         if (event) {
             return of(event);
@@ -32,19 +33,19 @@ export class EventService {
         return this._eventsAPIService.getEventById(id);
     }
 
-    viewEvent(id: string) {        
+    viewEvent(id: string) {
     }
     addEvent(event: EventModelDTO) {
         let events: EventModelDTO[] = [event];
         this._eventsAPIService.postEvents(events).subscribe((response: EventModelDTO[]) => {
             this.events.push(...response);
-            this.eventsChanged.next(this.events.slice());            
+            this.eventsChanged.next(this.events.slice());
         });
     }
     updateEvent(id: string, eventModel: EventModelDTO) {
         const eventIndex = this.events.findIndex(event => event.id == id);
         if (eventIndex != -1) {
-            let eventInput: EventModelDTO = this.events[eventIndex];            
+            let eventInput: EventModelDTO = this.events[eventIndex];
             eventInput.title = eventModel.title;
             //eventInput.start = eventModel.start;            
             eventInput.description = eventModel.description;
@@ -63,13 +64,12 @@ export class EventService {
     }
     deleteEvent(id: string) {
         const eventIndex = this.events.findIndex(event => event.id == id);
-        if (eventIndex != -1)
-        {
+        if (eventIndex != -1) {
             this.events.splice(eventIndex, 1);
             this.eventsChanged.next(this.events.slice());
         }
     }
-    
+
     navigateToEdit(path: string) {
         this.navigatedToEdit.next(path);
     }

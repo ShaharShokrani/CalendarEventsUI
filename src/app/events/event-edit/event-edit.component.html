@@ -1,83 +1,70 @@
 <div class="row">
-  <div class="col-xs-12">
-      <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
-          <div class="row">
-              <div class="col-xs-12">
-                  <button 
-                      type="submit" 
-                      class="btn btn-success"
-                      [disabled]="!eventForm.valid" >Save</button>
-                  <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
-              </div>
-          </div>
-          <div class="row">
-              <div class="col-xs-12">
-                  <div class="form-group">
-                      <label for="title">Title</label>
-                      <input 
-                          type="text"
-                          id="title"
-                          formControlName="title"
-                          class="form-control">
-                  </div>
-              </div>
-          </div>
-          <div class="row">
-              <div class="col-xs-12">
-                  <div class="form-group">
-                      <label for="imagePath">Image URL</label>
-                      <input 
-                          type="text"
-                          id="imagePath"
-                          formControlName="imagePath"
-                          class="form-control"
-                          #imagePath>
-                  </div>
-              </div>
-          </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <img [src]="imagePath.value" alt="" class="img-responsive">
-            </div>
-        </div>
-          <div class="row">
-            <div class="col-xs-12">
-                <div class="form-group">
-                    <label for="start">Start Date</label>
-                    <input 
-                        type="text"
-                        id="start"
-                        formControlName="start"
-                        class="form-control">
+    <div class="col-xs-12">
+        <form [formGroup]="eventForm" (change)="onChange()" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" id="title" formControlName="title" class="form-control">
+                    </div>
                 </div>
             </div>
-        </div>          
-          <div class="row">
-              <div class="col-xs-12">
-                  <div class="form-group">
-                      <label for="description">Description</label>
-                      <textarea
-                          type="text"
-                          id="description"
-                          rows="6"
-                          formControlName="description"
-                          class="form-control"></textarea>
-                  </div>
-              </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12">
-                <div class="form-group">
-                    <label for="url">URL</label>
-                    <textarea
-                        type="text"
-                        id="url"
-                        rows="6"
-                        formControlName="url"
-                        class="form-control"></textarea>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="imagePath">Image URL</label>
+                        <input type="text" id="imagePath" formControlName="imagePath" class="form-control" #imagePath>
+                    </div>
                 </div>
             </div>
-        </div>
-      </form>
-  </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <img [src]="imagePath.value" alt="" class="img-responsive">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="start">Start Date</label>
+                        <input type="text" id="start" formControlName="start" class="form-control" [owlDateTime]="start"
+                            [owlDateTimeTrigger]="start">
+                        <owl-date-time #start></owl-date-time>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="end">End Date</label>
+                        <input type="text" id="end" formControlName="end" class="form-control" [owlDateTime]="end"
+                            [owlDateTimeTrigger]="end">
+                        <owl-date-time #end></owl-date-time>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea type="text" id="description" rows="6" formControlName="description"
+                            class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="url">URL</label>
+                        <textarea type="text" id="url" rows="6" formControlName="url" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <button type="submit" class="btn btn-submit" [disabled]="!eventForm.valid">Save</button>
+                    <button type="button" class="btn btn-cancel" (click)="onCancel()">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>

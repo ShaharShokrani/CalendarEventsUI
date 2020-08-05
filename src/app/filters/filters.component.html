@@ -1,0 +1,5 @@
+<div class="row" *ngIf="this._filtersService.filters">
+  <div class="col-md-12">
+    <app-filter *ngFor="let filter of this._filtersService.filters; let i = index" [filter]="filter"></app-filter>
+  </div>
+</div>

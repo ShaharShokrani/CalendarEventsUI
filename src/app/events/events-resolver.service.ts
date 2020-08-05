@@ -7,11 +7,11 @@ import { EventService } from './events.service';
 
 @Injectable()
 export class EventsResolverService implements Resolve<EventModelDTO[]> {
-  constructor(    
+  constructor(
     private _eventsService: EventService
-  ) {}
+  ) { }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) : Observable<EventModelDTO[]> {
-    return this._eventsService.getEvents(null);
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<EventModelDTO[]> {
+    return this._eventsService.getEvents();
   }
 }
