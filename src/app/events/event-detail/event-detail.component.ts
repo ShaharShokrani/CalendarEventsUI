@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import { EventModelDTO } from '../event.model';
 import { EventService } from '../events.service';
@@ -12,17 +13,34 @@ import { EventService } from '../events.service';
 export class EventDetailComponent implements OnInit {
   eventModel: EventModelDTO;
   id: string;
+  faEdit = faEdit;
+  faDelete= faTrash;
 
   constructor(private eventService: EventService,
+    private route: ActivatedRoute,
     private router: Router,
     private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
-    console.log(this.activatedRoute.data);
+    this.route.params
+      .subscribe(
+        (params: Params) => {
+          this.eventModel = this.activatedRoute.snapshot.data["eventResolverService"];
+        }
+      )
+
     this.eventModel = this.activatedRoute.snapshot.data["eventResolverService"];
 
-        // .subscribe(
+    if (!this.eventModel.description) {
+      this.eventModel.description = "this is hard coded because the description is not saved in the DB"
+    }
+
+    if (!this.eventModel.imagePath) {
+      this.eventModel.imagePath = `https://via.placeholder.com/400x200/028090/FFFFFF/?text=${this.eventModel.title}`
+    }
+
+    // .subscribe(
     //   event => {
     //     if (event) {
     //       return event;
@@ -51,10 +69,10 @@ export class EventDetailComponent implements OnInit {
   onSelect(mode: string) {
   }
   onEditEvent() {
-    this.router.navigate(['edit'], {relativeTo: this.activatedRoute})
+    this.router.navigate(['edit'], { relativeTo: this.activatedRoute })
   }
   onDeleteEvent() {
     this.eventService.deleteEvent(this.id);
-    this.router.navigate(['../'], {relativeTo: this.activatedRoute});
+    this.router.navigate(['../'], { relativeTo: this.activatedRoute });
   }
 }

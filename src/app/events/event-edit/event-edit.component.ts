@@ -31,7 +31,6 @@ export class EventEditComponent implements OnInit {
   }
   onSubmit() {
     if (this.editMode) {
-      console.log(this.eventForm.value)
       this.eventService.updateEvent(this.id, this.eventForm.value);
     }
     else {

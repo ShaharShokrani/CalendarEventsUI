@@ -15,7 +15,7 @@
 </div>
 <div class="row">
     <div class="col-xs-12">
-        {{eventModel.start}}
+        {{eventModel.start | date:"short" }} - {{eventModel.end | date:"short" }}
     </div>
 </div>
 <div class="row">
@@ -27,8 +27,8 @@
                 Manage Event <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">                
-                <li><a style="cursor: pointer;" (click)="onEditEvent()">Edit Event</a></li>
-                <li><a style="cursor: pointer;" (click)="onDeleteEvent()">Delete Event</a></li>
+                <li><a style="cursor: pointer;" (click)="onEditEvent()">Edit Event <fa-icon [icon]="faEdit"></fa-icon></a></li>
+                <li><a style="cursor: pointer;" (click)="onDeleteEvent()">Delete Event <fa-icon [icon]="faDelete"></fa-icon></a></li>
             </ul>
         </div>
     </div>

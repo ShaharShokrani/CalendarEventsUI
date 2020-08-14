@@ -19,6 +19,7 @@ import { EventResolverService } from './event-resolver.service';
 import { FiltersComponent } from '../filters/filters.component';
 import { FilterComponent } from '../filters/filter/filter.component'
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
     EventsRoutingModule,
     SharedModule,
     OwlDateTimeModule, 
-    OwlNativeDateTimeModule
+    OwlNativeDateTimeModule,
+    FontAwesomeModule
   ],
   exports: [
     EventsRoutingModule
