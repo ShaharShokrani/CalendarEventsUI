@@ -31,9 +31,17 @@ export class EventsAPIService {
   }
 
   getEvents(filter: string) : Observable<EventModelDTO[]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+
     return this._httpClient
-      .get<EventModelDTO[]>(
-        this._configService.resourceApiURI + 'events/'
+      .post<EventModelDTO[]>(
+        this._configService.resourceApiURI + 'events/search',
+        {},
+        httpOptions
       );
 
     // console.log(this.fetchEvents$);

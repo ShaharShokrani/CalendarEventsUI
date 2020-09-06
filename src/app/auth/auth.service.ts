@@ -24,7 +24,7 @@ export class AuthService extends BaseService  {
     
     this.manager.getUser().then(user => { 
       this.user = user;      
-      this._authNavStatusSource.next(this.isAuthenticated());
+      this._authNavStatusSource.next(this.isAuthenticated);
     });
   }
 
@@ -34,7 +34,7 @@ export class AuthService extends BaseService  {
 
   async completeAuthentication() {
       this.user = await this.manager.signinRedirectCallback();
-      this._authNavStatusSource.next(this.isAuthenticated());      
+      this._authNavStatusSource.next(this.isAuthenticated);      
   }  
 
   register(userRegistration: any) {    
@@ -42,12 +42,15 @@ export class AuthService extends BaseService  {
     //.pipe(catchError(this.handleError));
   }
 
-  isAuthenticated(): boolean {
+  get isAuthenticated(): boolean {
     return this.user != null && !this.user.expired;
   }
 
   get authorizationHeaderValue(): string {
-    return `${this.user.token_type} ${this.user.access_token}`;
+    if (this.user)
+      return `${this.user.token_type} ${this.user.access_token}`;
+    else
+      return '';
   }
 
   get name(): string {

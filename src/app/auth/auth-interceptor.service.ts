@@ -18,11 +18,15 @@ export class AuthInterceptorService implements HttpInterceptor {
     constructor(private authService: AuthService) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler) : Observable<HttpEvent<any>> {
-        console.log("AuthInterceptorService");
-        const authorizationHeader = this.authService.authorizationHeaderValue;
-        const modifiedReq = req.clone({ 
-            headers: new HttpHeaders().set('Authorization', authorizationHeader)
-        });
-        return next.handle(modifiedReq);
+        if (this.authService.isAuthenticated) {
+            const authorizationHeader = this.authService.authorizationHeaderValue;
+            const modifiedReq = req.clone({ 
+                headers: new HttpHeaders().set('Authorization', authorizationHeader)
+            });
+            return next.handle(modifiedReq);
+        }
+        else {
+            return next.handle(req);
+        }
     }
 }

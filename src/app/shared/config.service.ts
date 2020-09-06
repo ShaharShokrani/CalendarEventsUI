@@ -8,7 +8,7 @@ export class ConfigService {
     constructor() {}
 
     get authority() {
-        return 'https://localhost:5001/';
+        return 'http://localhost:5001/';
     }    
      
     get resourceApiURI() {

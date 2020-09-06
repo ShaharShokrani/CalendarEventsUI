@@ -12,6 +12,7 @@ export class EventsResolverService implements Resolve<EventModelDTO[]> {
   ) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) : Observable<EventModelDTO[]> {
+    console.log(route);
     return this._eventsService.getEvents(null);
   }
 }

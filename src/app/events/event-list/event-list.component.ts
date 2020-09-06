@@ -40,6 +40,7 @@ export class EventListComponent implements OnInit, AfterViewInit, OnDestroy {
   calendarWeekends = true;
 
   convertEventModelToEventInput(eventsModels: EventModelDTO[]): EventInput[] {
+
     return Array.from(eventsModels, eventModel => {
       const eventInput: EventInput = {
         id: eventModel.id,
@@ -95,7 +96,8 @@ export class EventListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   ngOnInit() {    
     const eventsModels = this._activatedRoute.snapshot.data["eventsResolverService"];
-    this.eventsInputs = this.convertEventModelToEventInput(eventsModels);    
+    if (eventsModels)
+      this.eventsInputs = this.convertEventModelToEventInput(eventsModels);    
 
     this.eventsChangedSubscription = this._eventService.eventsChanged
     .subscribe(
