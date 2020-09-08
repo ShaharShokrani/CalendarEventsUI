@@ -66,9 +66,14 @@ export class EventsAPIService {
   }
 
   getEventById(id: string) : Observable<EventModelDTO> {
+    const options = {        
+      params: new HttpParams().set('id', id)
+    };
+
     return this._httpClient
       .get<EventModelDTO>(
-        this._configService.resourceApiURI + 'events/' + id
+        this._configService.resourceApiURI + 'events/getbyid',
+        options
       );
   }
 }
