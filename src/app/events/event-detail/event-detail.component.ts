@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute, Params, Data } from '@angular/router';
 
 import { EventModelDTO } from '../event.model';
 import { EventService } from '../events.service';
@@ -19,33 +19,9 @@ export class EventDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.activatedRoute.data);
-    this.eventModel = this.activatedRoute.snapshot.data["eventResolverService"];
-
-        // .subscribe(
-    //   event => {
-    //     if (event) {
-    //       return event;
-    //     } else {
-    //       this._router.navigate(['/events']);
-    //       return;
-    //     }
-    //   },      
-    //   error => {
-    //     console.log(error)
-    //   }
-    // )
-
-    // this.route.params
-    //   .subscribe(
-    //     (params: Params) => {
-    //       this.id = params['id'];
-    //       this.eventService.getEventModel(this.id).then(
-    //         result => this.eventModel = result,
-    //         error => console.log(error)
-    //       );
-    //     }
-    //   )
+    this.activatedRoute.data.subscribe((data: Data) => {  
+      this.eventModel = data["eventResolverService"];
+    });
   }
 
   onSelect(mode: string) {
