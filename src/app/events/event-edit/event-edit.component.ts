@@ -34,7 +34,7 @@ export class EventEditComponent implements OnInit {
       this.eventService.updateEvent(this.id, this.eventForm.value);
     }
     else {
-      this.eventService.addEvent(this.eventForm.value);
+      this.eventService.insertEvent(this.eventForm.value);
     }
     this.onCancel();
   }
@@ -50,7 +50,7 @@ export class EventEditComponent implements OnInit {
     let eventStart = new Date();
     let eventEnd = new Date();
     let eventIsAllDay = false;
-    let eventUrl = '';
+    let eventUrl = "";
 
     if (this.editMode) {
       const eventModel = new EventModelDTO("x","x",null,"s",null,null,"a",true,"s",null); //this.eventService.getEventModel(this.id);
@@ -71,7 +71,7 @@ export class EventEditComponent implements OnInit {
       'isAllDay': new FormControl(eventIsAllDay, Validators.required),
       'imagePath': new FormControl(eventImagePath, Validators.required),
       'description': new FormControl(eventDescription, Validators.required),
-      'url:': new FormControl(eventUrl)
+      'url': new FormControl(eventUrl)
     });
   }
   onAddItem() {

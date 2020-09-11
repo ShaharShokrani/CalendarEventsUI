@@ -1,32 +1,32 @@
 <div class="row">
-  <div class="col-xs-12">
-      <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
-          <div class="row">
-              <div class="col-xs-12">
-                  <button 
+    <div class="col-xs-12">
+        <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-xs-12">
+                    <button 
                       type="submit" 
                       class="btn btn-success"
                       [disabled]="!eventForm.valid" >Save</button>
-                  <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
-              </div>
-          </div>
-          <div class="row">
-              <div class="col-xs-12">
-                  <div class="form-group">
-                      <label for="title">Title</label>
-                      <input 
-                          type="text"
-                          id="title"
-                          formControlName="title"
-                          class="form-control">
-                  </div>
-              </div>
-          </div>
-          <div class="row">
-              <div class="col-xs-12">
-                  <div class="form-group">
-                      <label for="imagePath">Image URL</label>
-                      <input 
+                    <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input 
+                            type="text"
+                            id="title"
+                            formControlName="title"
+                            class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="imagePath">Image URL</label>
+                        <input 
                           type="text"
                           id="imagePath"
                           formControlName="imagePath"
@@ -52,7 +52,7 @@
                 </div>
             </div>
         </div>          
-          <div class="row">
+            <div class="row">
               <div class="col-xs-12">
                   <div class="form-group">
                       <label for="description">Description</label>
@@ -62,22 +62,22 @@
                           rows="6"
                           formControlName="description"
                           class="form-control"></textarea>
-                  </div>
-              </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12">
-                <div class="form-group">
-                    <label for="url">URL</label>
-                    <textarea
-                        type="text"
-                        id="url"
-                        rows="6"
-                        formControlName="url"
-                        class="form-control"></textarea>
+                    </div>
                 </div>
             </div>
-        </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="url">URL</label>
+                        <textarea
+                            type="text"
+                            id="url"
+                            rows="6"
+                            formControlName="url"
+                            class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
       </form>
   </div>
 </div>

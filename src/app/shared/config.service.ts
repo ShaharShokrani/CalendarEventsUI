@@ -8,11 +8,13 @@ export class ConfigService {
     constructor() {}
 
     get authority() {
-        return 'http://localhost:5001/';
+        return 'http://localhost:5001/'; //Docker
+        //return 'http://localhost:5002/'; //Local
     }    
      
     get resourceApiURI() {
-        return 'http://localhost:5000/api/';
+        return 'http://localhost:5000/api/'; //Docker
+        //return 'http://localhost:5003/api/'; //Local
     }
 
     get clientURI() {

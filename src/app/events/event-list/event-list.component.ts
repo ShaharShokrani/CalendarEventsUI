@@ -94,7 +94,8 @@ export class EventListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       )
   }
-  ngOnInit() {    
+  ngOnInit() { 
+    //TODOL Change it as in event-Details.
     const eventsModels = this._activatedRoute.snapshot.data["eventsResolverService"];
     if (eventsModels)
       this.eventsInputs = this.convertEventModelToEventInput(eventsModels);    

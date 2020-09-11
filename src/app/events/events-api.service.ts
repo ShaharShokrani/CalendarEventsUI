@@ -15,7 +15,7 @@ export class EventsAPIService {
     private _configService: ConfigService
   ) {}
 
-  postEvents(events: EventModelDTO[]) : Observable<EventModelDTO[]> {
+  insertEvents(events: EventModelDTO[]) : Observable<EventModelDTO[]> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
@@ -24,7 +24,7 @@ export class EventsAPIService {
     
     return this._httpClient
       .post<EventModelDTO[]>(
-         this._configService.resourceApiURI + 'events/',
+         this._configService.resourceApiURI + 'events/insert',
         events,
         httpOptions
       );
