@@ -24,7 +24,7 @@ export class EventsAPIService {
     
     return this._httpClient
       .post<EventModelDTO[]>(
-         this._configService.resourceApiURI + 'events/insert',
+         this._configService.resourceApiURI + '/api/events/insert',
         events,
         httpOptions
       );
@@ -39,7 +39,7 @@ export class EventsAPIService {
 
     return this._httpClient
       .post<EventModelDTO[]>(
-        this._configService.resourceApiURI + 'events/search',
+        this._configService.resourceApiURI + '/api/events/search',
         {},
         httpOptions
       );
@@ -72,7 +72,7 @@ export class EventsAPIService {
 
     return this._httpClient
       .get<EventModelDTO>(
-        this._configService.resourceApiURI + 'events/getbyid',
+        this._configService.resourceApiURI + '/api/events/getbyid',
         options
       );
   }
