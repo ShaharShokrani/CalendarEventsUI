@@ -13,17 +13,16 @@ import { AuthModule } from './auth/auth.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AboutComponent } from './about/about.component';
 import { AccountComponent } from './account/account.component';
-import { SignUpComponent } from './account/signup/signup.component';
+import { RegisterComponent } from './account/register/register.component';
 import { EventsModule } from './events/events.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
+import { AccountModule } from './account/account.module';
 //import { AuthInterceptorService } from './auth/auth-interceptor.service';
 
 @NgModule({
-  declarations: [  
-    SignUpComponent,      
-    AboutComponent, 
-    AccountComponent,
+  declarations: [      
+    AboutComponent,     
     AppComponent,
     HeaderComponent
   ],
@@ -33,6 +32,7 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
     AppRoutingModule,    
     SharedModule,
     FormsModule,
+    AccountModule,
     ReactiveFormsModule,
     AuthModule,
     EventsModule,

@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { UserManager, UserManagerSettings, User } from 'oidc-client';
-import { BehaviorSubject } from 'rxjs'; 
+import { map } from 'rxjs/operators';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthAPIService } from './auth-api.service';
+import { UserRegisterDTO } from '../shared/models/user-register-dto';
 
 import { BaseService } from '../shared/base.service';
 import { ConfigService } from '../shared/config.service';
+import { UserProfile } from '../shared/models/user-profile.model';
+import { UserLoginDTO } from '../shared/models/user-login-dto';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,63 +19,56 @@ export class AuthService extends BaseService  {
   private _authNavStatusSource = new BehaviorSubject<boolean>(false);
   // Observable navItem stream
   authNavStatus$ = this._authNavStatusSource.asObservable();
-
-  private manager = new UserManager(this.getClientSettings());
-  private user: User | null;
-
-  constructor(private http: HttpClient, private _configService: ConfigService) { 
-    super();     
     
-    this.manager.getUser().then(user => { 
-      this.user = user;      
-      this._authNavStatusSource.next(this.isAuthenticated);
-    });
+  jwtHelper = new JwtHelperService();
+  decodedToken: any;    
+
+  constructor(private _authAPIService: AuthAPIService) { 
+    super();
+    //this._authNavStatusSource.next(this.isAuthenticated);
   }
 
-  async signin() { 
-    return await this.manager.signinRedirect();
+  async register(userForRegisterDTO: UserRegisterDTO) { 
+    return this._authAPIService.register(userForRegisterDTO);
   }
 
-  async completeAuthentication() {
-      this.user = await this.manager.signinRedirectCallback();
-      this._authNavStatusSource.next(this.isAuthenticated);      
-  }  
-
-  register(userRegistration: any) {    
-    return this.http.post('https://localhost:5001/account/register', userRegistration);
-    //.pipe(catchError(this.handleError));
+  async login(userLoginDTO: UserLoginDTO) {
+    return this._authAPIService.login(userLoginDTO)
+    .pipe(
+      map((response: any) => {
+        const user = response;
+        if (user) {
+          localStorage.setItem('token', user.token);
+          localStorage.setItem('user', JSON.stringify(user.user));
+          this.decodedToken = this.jwtHelper.decodeToken(user.token);          
+          this._authNavStatusSource.next(this.isAuthenticated);
+        }
+      })
+    );
   }
 
-  get isAuthenticated(): boolean {
-    return this.user != null && !this.user.expired;
+  get isAuthenticated(): boolean {    
+    const token = localStorage.getItem('token');
+    if (token)
+      return !this.jwtHelper.isTokenExpired(token);
+    else
+      return false;
   }
 
   get authorizationHeaderValue(): string {
-    if (this.user)
-      return `${this.user.token_type} ${this.user.access_token}`;
-    else
+    if (this.isAuthenticated) {
+      const token = localStorage.getItem('token');
+      return "Bearer " + token;      
+    }
+    else {
       return '';
-  }
-
-  get name(): string {
-    return this.user != null ? this.user.profile.name : '';
+    }      
   }
 
   async signout() {
-    await this.manager.signoutRedirect();
-  }
-
-  getClientSettings(): UserManagerSettings {
-    return {
-        authority: this._configService.authority,
-        client_id: this._configService.client_id,
-        redirect_uri: 'http://localhost:4200/signin-callback',
-        post_logout_redirect_uri: 'http://localhost:4200/signout-callback',
-        response_type: "code",
-        scope: "openid profile email calendareventsapi",
-        automaticSilentRenew: true,
-        client_secret: null,
-        silent_redirect_uri: 'http://localhost:4200/silent-refresh.html'
-    };
+    localStorage.removeItem('token');
+    localStorage.removeItem('token');
+    this.decodedToken = null;
+    this._authNavStatusSource.next(this.isAuthenticated); 
   }
 }

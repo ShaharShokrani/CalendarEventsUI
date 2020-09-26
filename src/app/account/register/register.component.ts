@@ -6,17 +6,16 @@ import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss']
 })
-export class SignUpComponent implements OnInit {
+export class RegisterComponent implements OnInit {
   success: boolean;
-  error: string;
-  userRegistration: UserRegistration = { name: '', email: '', password: ''};
+  error: string;  
   submitted: boolean = false;
 
-  signUpForm: FormGroup;
+  registerForm: FormGroup;
 
   constructor(private _authenticationService: AuthService, private spinner: NgxSpinnerService) {   
   }
@@ -25,9 +24,9 @@ export class SignUpComponent implements OnInit {
     this.initForm();
   }
 
-  onSubmit(form: NgForm) { 
+  async onSubmit(form: NgForm) { 
     this.spinner.show();    
-    this._authenticationService.register(this.signUpForm.value)
+    (await this._authenticationService.register(this.registerForm.value))
       .pipe(finalize(() => {
         this.spinner.hide();
       }))  
@@ -43,8 +42,7 @@ export class SignUpComponent implements OnInit {
   }
 
   initForm() {
-    this.signUpForm = new FormGroup({
-      name: new FormControl('', Validators.required),
+    this.registerForm = new FormGroup({      
       email: new FormControl('', [Validators.required, Validators.email]),      
       password: new FormControl(null, [Validators.required, this.validatePasswordFunction.bind(this)])
     });

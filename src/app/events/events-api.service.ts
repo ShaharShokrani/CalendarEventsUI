@@ -24,7 +24,7 @@ export class EventsAPIService {
     
     return this._httpClient
       .post<EventModelDTO[]>(
-         this._configService.resourceApiURI + '/api/events/insert',
+         this._configService.resourceApiURI + '/events/insert',
         events,
         httpOptions
       );
@@ -39,30 +39,10 @@ export class EventsAPIService {
 
     return this._httpClient
       .post<EventModelDTO[]>(
-        this._configService.resourceApiURI + '/api/events/search',
+        this._configService.resourceApiURI + '/events/search',
         {},
         httpOptions
       );
-
-    // console.log(this.fetchEvents$);
-    // if (this.fetchEvents$[filter]) {
-    //   console.log("return this.fetchEvents$[filter];");
-    //   return this.fetchEvents$[filter];
-    // }
-
-    // this.fetchEvents$[filter] = this._httpClient
-    //   .get<EventModelDTO[]>(
-    //     this._configService.resourceApiURI + 'events/'      
-    //   )
-    //   .pipe(
-    //     shareReplay({ bufferSize: 1, refCount: true }),
-    //     catchError(err => {
-    //       delete this.fetchEvents$[filter];
-    //       return EMPTY;
-    //     })
-    //   );
-    
-    // return this.fetchEvents$[filter];
   }
 
   getEventById(id: string) : Observable<EventModelDTO> {
@@ -72,7 +52,7 @@ export class EventsAPIService {
 
     return this._httpClient
       .get<EventModelDTO>(
-        this._configService.resourceApiURI + '/api/events/getbyid',
+        this._configService.resourceApiURI + '/events/getbyid',
         options
       );
   }

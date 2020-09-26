@@ -5,5 +5,7 @@ export class UserProfile {
     email: string;
     firstName: string;
     lastName: string;
+    created: Date;
+    lastActive: any;
     userPermissions: UserPermission[];
 }
