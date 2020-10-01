@@ -17,7 +17,7 @@ export class EventEditComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private eventService: EventService) { } 
+    private _eventService: EventService) { } 
 
   ngOnInit() {
     this.route.params
@@ -31,10 +31,10 @@ export class EventEditComponent implements OnInit {
   }
   onSubmit() {    
     if (this.editMode) {
-      this.eventService.updateEvent(this.id, this.eventForm.value);
+      this._eventService.updateEvent(this.id, this.eventForm.value);
     }
     else {
-      this.eventService.insertEvent(this.eventForm.value);
+      this._eventService.insertEvent(this.eventForm.value);
     }
     this.onCancel();
   }
@@ -43,7 +43,7 @@ export class EventEditComponent implements OnInit {
     this.router.navigate(['../'], {relativeTo: this.route});
   }
 
-  initForm() {
+  async initForm() {
     let eventTitle = '';
     let eventImagePath = '';
     let eventDescription = '';
@@ -53,26 +53,35 @@ export class EventEditComponent implements OnInit {
     let eventUrl = "";
 
     if (this.editMode) {
-      const eventModel = new EventModelDTO("x","x",null,"s",null,null,"a",true,"s",null); //this.eventService.getEventModel(this.id);
-
-      eventTitle = eventModel.title;
-      eventImagePath = eventModel.imagePath;
-      eventDescription = eventModel.description;
-      eventStart = <Date>eventModel.start;
-      eventEnd = <Date>eventModel.end;
-      eventIsAllDay = eventModel.isAllDay;
-      eventUrl = eventModel.url;
-    }
-    
-    this.eventForm = new FormGroup({
-      'title': new FormControl(eventTitle, Validators.required),
-      'start': new FormControl(eventStart, Validators.required),
-      'end': new FormControl(eventEnd, Validators.required),
-      'isAllDay': new FormControl(eventIsAllDay, Validators.required),
-      'imagePath': new FormControl(eventImagePath, Validators.required),
-      'description': new FormControl(eventDescription, Validators.required),
-      'url': new FormControl(eventUrl)
-    });
+      //const eventModel = new EventModelDTO("x","x",null,"s",null,null,"a",true,"s",null); //this.eventService.getEventModel(this.id);
+      (await this._eventService.getEventById(this.id)).subscribe(
+        (eventModel: EventModelDTO) => {
+          console.log('eventModel', eventModel);
+          eventTitle = eventModel.title;
+          eventImagePath = eventModel.imagePath;
+          eventDescription = eventModel.description;
+          eventStart = <Date>eventModel.start;
+          eventEnd = <Date>eventModel.end;
+          eventIsAllDay = eventModel.isAllDay;
+          eventUrl = eventModel.url;
+        },
+        error => {
+          console.log(error);
+        },
+        () => {
+          console.log('Done');
+          this.eventForm = new FormGroup({
+            'title': new FormControl(eventTitle, Validators.required),
+            'start': new FormControl(eventStart, Validators.required),
+            'end': new FormControl(eventEnd, Validators.required),
+            'isAllDay': new FormControl(eventIsAllDay, Validators.required),
+            'imagePath': new FormControl(eventImagePath, Validators.required),
+            'description': new FormControl(eventDescription, Validators.required),
+            'url': new FormControl(eventUrl)
+          });
+        }
+      );    
+    }    
   }
   onAddItem() {
   }
