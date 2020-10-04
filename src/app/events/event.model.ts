@@ -1,4 +1,4 @@
-import { DateInput } from '@fullcalendar/core/datelib/env';
+import { DateInput } from '@fullcalendar/core';
 
 export class EventModelDTO {
   public id: string;

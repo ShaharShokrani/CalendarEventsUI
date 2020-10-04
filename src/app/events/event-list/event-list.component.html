@@ -1,14 +1,6 @@
 <full-calendar
   #calendar
-  defaultView="dayGridMonth"
-  [plugins]="calendarPlugins"
-  [weekends]="true"
-  deepChangeDetection="true"
-  [events]="eventsInputs"
-  [defaultDate]="defaultDate"
-  [timeZone]="timeZone"
-  (datesRender)="handleDatesRender($event)"
-  (eventClick)="handleEventClick($event)">
+  [options]='calendarOptions'>
 </full-calendar>
 <!-- <div *ngIf="options">
   <ng-fullcalendar 

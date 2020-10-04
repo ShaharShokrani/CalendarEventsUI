@@ -1,16 +1,18 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
+import { Calendar } from '@fullcalendar/core';
+import { EventInput, EventApi, ToolbarInput, CalendarOptions } from '@fullcalendar/core';
+
 import dayGridPlugin, { DayGridView } from '@fullcalendar/daygrid';
-import timeGrigPlugin from '@fullcalendar/timegrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
-import { EventInput, EventApi, Calendar, View } from '@fullcalendar/core';
 
 import { EventService } from '../events.service';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { EventModelDTO } from '../event.model';
-import { ToolbarInput } from '@fullcalendar/core/types/input-types';
 
 @Component({
   selector: 'app-events-list',
@@ -29,14 +31,40 @@ export class EventListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private eventsChangedSubscription: Subscription;
   private navigatedToEditSubscription: Subscription;
-  eventsInputs: EventInput[];  
+  eventsInputs: EventInput[] = []; 
+
+  private calendarOptions: CalendarOptions = {
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+    },
+    plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
+    initialView: 'dayGridMonth',
+    initialEvents: this.eventsInputs, // alternatively, use the `events` setting to fetch from a feed
+    weekends: true,
+    editable: true,
+    selectable: true,
+    selectMirror: true,
+    dayMaxEvents: true,
+    //select: this.handleDateSelect.bind(this),
+    eventClick: this.handleEventClick.bind(this),
+    //eventsSet: this.handleEvents.bind(this)
+    /* you can update a remote database when these fire:
+    eventAdd:
+    eventChange:
+    eventRemove:
+    */
+  };
+ 
 
   constructor(private _eventService: EventService,
     private _router: Router,
-    private _activatedRoute: ActivatedRoute) { }
+    private _activatedRoute: ActivatedRoute) { 
+      const name = Calendar.name; // add this line in your constructor 
+    }
 
-  calendarVisible = true;
-  calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
+  calendarVisible = true;  
   calendarWeekends = true;
 
   convertEventModelToEventInput(eventsModels: EventModelDTO[]): EventInput[] {
@@ -55,17 +83,26 @@ export class EventListComponent implements OnInit, AfterViewInit, OnDestroy {
       };
       return eventInput;
     });
+  }  
+
+  ngOnInit() { 
+    //TODOL Change it as in event-Details.
+    const eventsModels = this._activatedRoute.snapshot.data["eventsResolverService"];
+    if (eventsModels)
+      this.eventsInputs = this.convertEventModelToEventInput(eventsModels);    
+
+    this.eventsChangedSubscription = this._eventService.eventsChanged
+    .subscribe(
+      (eventsModels: EventModelDTO[]) => {
+        this.eventsInputs = this.convertEventModelToEventInput(eventsModels);
+      }
+  );
   }
-  private toolBarInput : ToolbarInput = {    
-    left: 'prev,next today',
-    center: 'title',
-    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-  }
+
   ngAfterViewInit() { 
     //TODO: Add an issue to understand the difference between ngOnInit vs ngAfterViewInit usage.
     this.calendarApi = this.calendarComponent.getApi();
-    this.calendarComponent.header = this.toolBarInput;
-    this.calendarComponent.plugins = [ 'calendarPlugins', 'dayGrid', 'timeGrid' ];        
+    this.calendarComponent.options = this.calendarOptions;       
     
     this.navigatedToEditSubscription = this._eventService.navigatedToEdit
       .subscribe(
@@ -94,19 +131,6 @@ export class EventListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       )
   }
-  ngOnInit() { 
-    //TODOL Change it as in event-Details.
-    const eventsModels = this._activatedRoute.snapshot.data["eventsResolverService"];
-    if (eventsModels)
-      this.eventsInputs = this.convertEventModelToEventInput(eventsModels);    
-
-    this.eventsChangedSubscription = this._eventService.eventsChanged
-    .subscribe(
-      (eventsModels: EventModelDTO[]) => {
-        this.eventsInputs = this.convertEventModelToEventInput(eventsModels);
-      }
-  );
-  }
 
   onViewItem(id: string) {
     this._eventService.navigatedToEdit
@@ -117,7 +141,8 @@ export class EventListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.onViewItem(model.event.id);
   } 
 
-  handleDatesRender(arg: {view: View, el: HTMLElement }): void {
+  handleDatesRender(arg: any): void {
+    console.log("handleDatesRender(arg)", arg);
     let currentStart = arg.view.currentStart;    
 
     this.year = +this._activatedRoute.snapshot.params["year"];
@@ -138,35 +163,5 @@ export class EventListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.eventsChangedSubscription.unsubscribe();
     this.navigatedToEditSubscription.unsubscribe();
   }
-
-  // modifyTitle(eventIndex, newTitle) {
-  //   this.calendarEvents[eventIndex].title = newTitle;
-  // }
-
-  // toggleVisible() {
-  //   this.calendarVisible = !this.calendarVisible;
-  // }
-
-  // toggleWeekends() {
-  //   this.calendarWeekends = !this.calendarWeekends;
-  // }
-
-  // gotoPast() {
-  //   let calendarApi = this.calendarComponent.getApi();
-  //   calendarApi.gotoDate('2000-01-01'); // call a method on the Calendar object
-  // }
-
-  // handleDateClick(arg) {
-  //   if (confirm('Would you like to add an event to ' + arg.dateStr + ' ?')) {
-  //     this.calendarEvents = this.calendarEvents.concat({ // add new event data. must create new array
-  //       title: 'New Event',
-  //       start: arg.date,
-  //       allDay: arg.allDay
-  //     })
-  //   }
-  // }
-
-  // onEventInputSelected(calendarEventInput: CalendarEventInput) {
-  //   this.calendarEventInputWasSelected.emit(calendarEventInput);
-  // }
+  
 }
