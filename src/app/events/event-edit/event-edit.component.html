@@ -1,80 +1,79 @@
-<div class="row">
-    <div class="col-xs-12">
-        <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
-            <div class="row">
-                <div class="col-xs-12">
-                    <button type="submit" class="btn btn-success" [disabled]="!eventForm.valid">Save</button>
-                    <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="form-group">
-                        <label for="title">Title</label>
-                        <input type="text" id="title" formControlName="title" class="form-control">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Event Details:</h3>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="form-group">
-                        <label for="imagePath">Image URL</label>
-                        <input type="text" id="imagePath" formControlName="imagePath" class="form-control" #imagePath>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" id="title" formControlName="title" class="form-control">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <img [src]="imagePath.value" alt="" class="img-responsive">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="form-group">
-                        <label for="start">Start Date</label>
-                        <input 
-                        id="start"
-                        formControlName="start"
-                        [owlDateTime]="start"
-                         [owlDateTimeTrigger]="start" 
-                         placeholder=""
-                         class="form-control">
-                        <owl-date-time #start></owl-date-time>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="imagePath">Image URL</label>
+                            <input type="text" id="imagePath" formControlName="imagePath" class="form-control"
+                                #imagePath>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="form-group">
-                        <label for="end">End Date</label>
-                        <input 
-                        id="end"
-                        formControlName="end"
-                        [owlDateTime]="end"
-                         [owlDateTimeTrigger]="end" 
-                         placeholder=""
-                         class="form-control">
-                        <owl-date-time #end></owl-date-time>
+                <div class="row">
+                    <div class="col-md-12">
+                        <img [src]="imagePath.value" alt="" class="img-responsive">
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea type="text" id="description" rows="6" formControlName="description"
-                            class="form-control"></textarea>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="start">Start Date</label>
+                            <input id="start" formControlName="start" [owlDateTime]="start" [owlDateTimeTrigger]="start"
+                                placeholder="" class="form-control">
+                            <owl-date-time #start></owl-date-time>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="form-group">
-                        <label for="url">URL</label>
-                        <textarea type="text" id="url" rows="6" formControlName="url" class="form-control"></textarea>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="end">End Date</label>
+                            <input id="end" formControlName="end" [owlDateTime]="end" [owlDateTimeTrigger]="end"
+                                placeholder="" class="form-control">
+                            <owl-date-time #end></owl-date-time>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea type="text" id="description" rows="6" formControlName="description"
+                                class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="url">URL</label>
+                            <textarea type="text" id="url" rows="6" formControlName="url"
+                                class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-submit" [disabled]="!eventForm.valid">Save</button>
+                        <button type="button" class="btn btn-cancel" (click)="onCancel()">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
