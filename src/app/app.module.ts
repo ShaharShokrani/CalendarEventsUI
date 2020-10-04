@@ -18,6 +18,7 @@ import { EventsModule } from './events/events.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { AccountModule } from './account/account.module';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 //import { AuthInterceptorService } from './auth/auth-interceptor.service';
 
 @NgModule({
@@ -37,7 +38,9 @@ import { AccountModule } from './account/account.module';
     AuthModule,
     EventsModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    OwlDateTimeModule, 
+    OwlNativeDateTimeModule
   ],
   providers: [
     {

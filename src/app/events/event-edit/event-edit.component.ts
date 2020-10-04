@@ -9,7 +9,7 @@ import { EventModelDTO } from '../event.model';
   templateUrl: './event-edit.component.html',
   styleUrls: ['./event-edit.component.css']
 })
-export class EventEditComponent implements OnInit {  
+export class EventEditComponent implements OnInit {
 
   id: string;
   editMode = false;
@@ -17,7 +17,7 @@ export class EventEditComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private _eventService: EventService) { } 
+    private _eventService: EventService) { }
 
   ngOnInit() {
     this.route.params
@@ -25,11 +25,11 @@ export class EventEditComponent implements OnInit {
         (params: Params) => {
           this.id = params['id'];
           this.editMode = params['id'] != null;
-          this.initForm();          
+          this.initForm();
         }
-      )    
+      )
   }
-  onSubmit() {    
+  onSubmit() {
     if (this.editMode) {
       this._eventService.updateEvent(this.id, this.eventForm.value);
     }
@@ -40,7 +40,7 @@ export class EventEditComponent implements OnInit {
   }
   onCancel() {
     //Go up one level, if we were editing this will take us details
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   async initForm() {
@@ -51,6 +51,16 @@ export class EventEditComponent implements OnInit {
     let eventEnd = new Date();
     let eventIsAllDay = false;
     let eventUrl = "";
+
+    this.eventForm = new FormGroup({
+      'title': new FormControl(eventTitle, Validators.required),
+      'start': new FormControl(eventStart, Validators.required),
+      'end': new FormControl(eventEnd, Validators.required),
+      'isAllDay': new FormControl(eventIsAllDay, Validators.required),
+      'imagePath': new FormControl(eventImagePath, Validators.required),
+      'description': new FormControl(eventDescription, Validators.required),
+      'url': new FormControl(eventUrl)
+    });
 
     if (this.editMode) {
       //const eventModel = new EventModelDTO("x","x",null,"s",null,null,"a",true,"s",null); //this.eventService.getEventModel(this.id);
@@ -80,9 +90,13 @@ export class EventEditComponent implements OnInit {
             'url': new FormControl(eventUrl)
           });
         }
-      );    
-    }    
+      );
+    } 
+
+
   }
+
+
   onAddItem() {
   }
 }

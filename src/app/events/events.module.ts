@@ -16,6 +16,8 @@ import { EventsResolverService } from './events-resolver.service';
 import { AuthInterceptorService } from '../auth/auth-interceptor.service';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { EventResolverService } from './event-resolver.service';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { EventResolverService } from './event-resolver.service';
     ReactiveFormsModule, 
     FullCalendarModule,    
     EventsRoutingModule,
-    SharedModule    
+    SharedModule,
+    OwlDateTimeModule, 
+    OwlNativeDateTimeModule     
   ],
   exports: [
     EventsRoutingModule
