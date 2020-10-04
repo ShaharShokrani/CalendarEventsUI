@@ -12,12 +12,10 @@ import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './auth/auth.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AboutComponent } from './about/about.component';
-import { AccountComponent } from './account/account.component';
-import { RegisterComponent } from './account/register/register.component';
-import { EventsModule } from './events/events.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { AccountModule } from './account/account.module';
+import { EventsModule } from './events/events.module';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 //import { AuthInterceptorService } from './auth/auth-interceptor.service';
 
