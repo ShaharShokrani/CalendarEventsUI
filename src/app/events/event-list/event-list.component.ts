@@ -31,44 +31,27 @@ export class EventListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private eventsChangedSubscription: Subscription;
   private navigatedToEditSubscription: Subscription;
-  eventsInputs: EventInput[] = []; 
-
-  private calendarOptions: CalendarOptions = {
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-    },
-    plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
-    initialView: 'dayGridMonth',
-    initialEvents: this.eventsInputs, // alternatively, use the `events` setting to fetch from a feed
-    weekends: true,
-    editable: true,
-    selectable: true,
-    selectMirror: true,
-    dayMaxEvents: true,
-    //select: this.handleDateSelect.bind(this),
-    eventClick: this.handleEventClick.bind(this),
-    //eventsSet: this.handleEvents.bind(this)
-    /* you can update a remote database when these fire:
-    eventAdd:
-    eventChange:
-    eventRemove:
-    */
-  };
- 
+  eventsInputs: EventInput[] = [{ title: 'Event Now1', start: new Date() }];   
 
   constructor(private _eventService: EventService,
     private _router: Router,
     private _activatedRoute: ActivatedRoute) { 
+      this.eventsChangedSubscription = this._eventService.onEvents()
+      .subscribe({
+        next: this.handlesom.bind(this)
+      });
       const name = Calendar.name; // add this line in your constructor 
     }
 
+    handlesom(eventsModels: EventModelDTO[]) {      
+        console.log("onEvents");
+        this.eventsInputs = this.convertEventModelToEventInput(eventsModels);
+        this.calendarApi.setOption("events", this.eventsInputs);      
+    }
   calendarVisible = true;  
   calendarWeekends = true;
 
   convertEventModelToEventInput(eventsModels: EventModelDTO[]): EventInput[] {
-
     return Array.from(eventsModels, eventModel => {
       const eventInput: EventInput = {
         id: eventModel.id,
@@ -89,47 +72,24 @@ export class EventListComponent implements OnInit, AfterViewInit, OnDestroy {
     //TODOL Change it as in event-Details.
     const eventsModels = this._activatedRoute.snapshot.data["eventsResolverService"];
     if (eventsModels)
-      this.eventsInputs = this.convertEventModelToEventInput(eventsModels);    
-
-    this.eventsChangedSubscription = this._eventService.eventsChanged
-    .subscribe(
-      (eventsModels: EventModelDTO[]) => {
-        this.eventsInputs = this.convertEventModelToEventInput(eventsModels);
-      }
-  );
+    {
+      this.eventsInputs = this.convertEventModelToEventInput(eventsModels);          
+    }  
   }
 
   ngAfterViewInit() { 
     //TODO: Add an issue to understand the difference between ngOnInit vs ngAfterViewInit usage.
-    this.calendarApi = this.calendarComponent.getApi();
-    this.calendarComponent.options = this.calendarOptions;       
+    this.calendarComponent.options = this.calendarOptions;
+    this.calendarApi = this.calendarComponent.getApi();    
     
+    this.calendarApi.setOption("events", this.eventsInputs);
+
     this.navigatedToEditSubscription = this._eventService.navigatedToEdit
       .subscribe(
         (path: string) => {          
           this._router.navigate([path], {relativeTo: this._activatedRoute});
         }
       );
-
-    this._activatedRoute.params
-      .subscribe(
-        (params: Params) => {          
-          if ((params['year'] && params['month'] && params['day']) &&
-              (+params['year'] != this.year ||
-              +params['month'] != this.month ||
-              +params['day'] != this.day))
-          {
-            this.year = +params['year'];
-            this.month = +params['month'];
-            this.day = params['day'];
-
-            let goToDate = new Date(this.year, this.month, this.day);
-            this.calendarApi.gotoDate(goToDate);
-            //TODO: This navigated repeated here again in case the url has been pasted into the url bar, find a better way to handle it (it should be handled from only one place).
-            this._router.navigate(['events', this.year, this.month, this.day]); 
-          }
-        }
-      )
   }
 
   onViewItem(id: string) {
@@ -137,27 +97,39 @@ export class EventListComponent implements OnInit, AfterViewInit, OnDestroy {
       .next(id);
   }
 
-  handleEventClick(model: {el: Object, event: EventApi, jsEvent: MouseEvent, view: DayGridView}) {    
+  handleEventClick(model: {el: Object, event: EventApi, jsEvent: MouseEvent, view: DayGridView}) {        
+    console.log("handleEventClick");
     this.onViewItem(model.event.id);
   } 
 
-  handleDatesRender(arg: any): void {
-    console.log("handleDatesRender(arg)", arg);
-    let currentStart = arg.view.currentStart;    
+  // handleDatesRender(): void {    
+  //   let currentStart = this.calendarApi.view.currentStart;    
+  // }
 
-    this.year = +this._activatedRoute.snapshot.params["year"];
-    this.month = +this._activatedRoute.snapshot.params["month"];
-    this.day = +this._activatedRoute.snapshot.params["day"];
-    //The current navigated in-app route were from inside the calendar datesRender event
-    if (this.year != currentStart.getFullYear() ||
-        this.month != (currentStart.getMonth() + 1) ||
-        this.day != currentStart.getDate()) {
-          this.year = currentStart.getFullYear();
-          this.month = (currentStart.getMonth() + 1);
-          this.day = currentStart.getDate();
-          this._router.navigate(['events', this.year, this.month, this.day]);
-    }
-  }
+  private calendarOptions: CalendarOptions = {
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+    },
+    plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
+    initialView: 'dayGridMonth',
+    //initialEvents: this.eventsInputs, // alternatively, use the `events` setting to fetch from a feed
+    weekends: true,
+    editable: true,
+    selectable: true,
+    selectMirror: true,
+    dayMaxEvents: true,    
+    events: this.eventsInputs,
+    //select: this.handleDateSelect.bind(this),
+    eventClick: this.handleEventClick.bind(this),
+    //eventsSet: this.handleEvents.bind(this)
+    /* you can update a remote database when these fire:
+    eventAdd:
+    eventChange:
+    eventRemove:
+    */
+  };
 
   ngOnDestroy() {
     this.eventsChangedSubscription.unsubscribe();

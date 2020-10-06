@@ -17,8 +17,7 @@ const children = [
 ];
 
 const routes: Routes = [  
-  { path: '', component: EventsComponent, children: children},
-  { path: ':year/:month/:day', component: EventsComponent, children: children, resolve: {eventsResolverService : EventsResolverService}}
+  { path: '', component: EventsComponent, children: children, resolve: {eventsResolverService : EventsResolverService}}
 ];
 
 @NgModule({
