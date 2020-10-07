@@ -2,19 +2,24 @@ import { Subject, Subscription, Observable, from, of } from 'rxjs';
 import { EventModelDTO } from './event.model';
 import { EventsAPIService } from './events-api.service';
 import { Injectable } from '@angular/core';
-import { map, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
-export class EventService {
-    eventsChanged = new Subject<EventModelDTO[]>();
+export class EventService {    
+    private eventsSubject = new Subject<EventModelDTO[]>();
+
     navigatedToEdit = new Subject<string>();    
     private eventModelDTOs: EventModelDTO[] = [];
     
     constructor(private _eventsAPIService: EventsAPIService) {}
 
-    setEvents(events: EventModelDTO[]) {
+    onEvents(): Observable<EventModelDTO[]> {
+        return this.eventsSubject.asObservable();
+    }
+    setEvents(events) {
+        console.log("EventService.setEvents", events);
         this.eventModelDTOs = events;
-        this.eventsChanged.next(this.eventModelDTOs.slice());
+        this.eventsSubject.next(events);
     }
     getEvents(filter: string) : Observable<EventModelDTO[]> {
         if (this.eventModelDTOs.length !== 0) {
@@ -48,7 +53,7 @@ export class EventService {
 
     private addEvents(eventModelDTOs: EventModelDTO[]) {
         this.eventModelDTOs.push(...eventModelDTOs);
-        this.eventsChanged.next(this.eventModelDTOs.slice());
+        this.eventsSubject.next(this.eventModelDTOs.slice());
     }
     
     updateEvent(id: string, eventModel: EventModelDTO) {
@@ -68,7 +73,7 @@ export class EventService {
             //         temp.title = eventModel.title;                       //     }
             //     return temp;
             // });        
-            this.eventsChanged.next(this.eventModelDTOs.slice());
+            this.eventsSubject.next(this.eventModelDTOs.slice());
         }
     }
     deleteEvent(id: string) {
@@ -76,7 +81,7 @@ export class EventService {
         if (eventIndex != -1)
         {
             this.eventModelDTOs.splice(eventIndex, 1);
-            this.eventsChanged.next(this.eventModelDTOs.slice());
+            this.eventsSubject.next(this.eventModelDTOs.slice());
         }
     }
     
