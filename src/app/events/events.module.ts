@@ -18,6 +18,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { EventResolverService } from './event-resolver.service';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { EventFilterComponent } from './event-filter/event-filter.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     EventDetailComponent,    
     EventStartComponent,
     EventEditComponent,
-    EventAddButtonComponent
+    EventAddButtonComponent,
+    EventFilterComponent
   ],
   imports: [
     ReactiveFormsModule, 

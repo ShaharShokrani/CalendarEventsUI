@@ -8,24 +8,23 @@ import { BaseService } from '../shared/base.service';
 import { ConfigService } from '../shared/config.service';
 import { UserProfile } from '../shared/models/user-profile.model';
 import { UserLoginDTO } from '../shared/models/user-login-dto';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService extends BaseService  {
 
-  // Observable navItem source
-  private _authNavStatusSource = new BehaviorSubject<boolean>(false);
-  // Observable navItem stream
-  authNavStatus$ = this._authNavStatusSource.asObservable();
+  private _currentUserSubject: BehaviorSubject<boolean>;  
+  public currentUser$ : Observable<boolean>;
     
   jwtHelper = new JwtHelperService();
   decodedToken: any;    
 
   constructor(private _authAPIService: AuthAPIService) { 
-    super();
-    //this._authNavStatusSource.next(this.isAuthenticated);
+    super();    
+    this._currentUserSubject = new BehaviorSubject<boolean>(this.isAuthenticated);
+    this.currentUser$ = this._currentUserSubject.asObservable();
   }
 
   async register(userForRegisterDTO: UserRegisterDTO) { 
@@ -41,7 +40,8 @@ export class AuthService extends BaseService  {
           localStorage.setItem('token', user.token);
           localStorage.setItem('user', JSON.stringify(user.user));
           this.decodedToken = this.jwtHelper.decodeToken(user.token);          
-          this._authNavStatusSource.next(this.isAuthenticated);
+          this._currentUserSubject.next(this.isAuthenticated);
+          return user;
         }
       })
     );
@@ -67,8 +67,8 @@ export class AuthService extends BaseService  {
 
   async signout() {
     localStorage.removeItem('token');
-    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     this.decodedToken = null;
-    this._authNavStatusSource.next(this.isAuthenticated); 
+    this._currentUserSubject.next(this.isAuthenticated); 
   }
 }

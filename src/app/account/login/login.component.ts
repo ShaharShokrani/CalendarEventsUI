@@ -4,6 +4,7 @@ import { finalize } from 'rxjs/operators'
 import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/auth/auth.service';
 import { UserLoginDTO } from 'src/app/shared/models/user-login-dto';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,16 +15,19 @@ export class LoginComponent implements OnInit {
   userLoginDTO: UserLoginDTO = {email: '', password: ''};
   success: boolean;
   error: string;  
+  returnUrl: string;
   submitted: boolean = false;
-
-  loginForm: FormGroup;  
+  loginForm: FormGroup;    
 
   constructor(
     private _authService: AuthService,    
-    private _spinner: NgxSpinnerService) { }
+    private _spinner: NgxSpinnerService,
+    private _route: ActivatedRoute,
+    private _router: Router) { }
 
   ngOnInit() {
     this.initForm();
+    this.returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   async onSubmit() { 
@@ -34,7 +38,8 @@ export class LoginComponent implements OnInit {
       }))  
       .subscribe(
         () => {                  
-          this.success = true;         
+          this.success = true;
+          this._router.navigate([this.returnUrl]);          
         },
       error => {
         this.error = error;       
