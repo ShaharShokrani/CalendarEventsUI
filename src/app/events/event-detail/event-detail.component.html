@@ -20,16 +20,10 @@
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <div class="btn-group" appDropdown>
-            <button 
-                type="button" 
-                class="btn btn-primary dropdown-toggle">
-                Manage Event <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">                
-                <li><a style="cursor: pointer;" (click)="onEditEvent()">Edit Event</a></li>
-                <li><a style="cursor: pointer;" (click)="onDeleteEvent()">Delete Event</a></li>
-            </ul>
+        <div class="btn-group mt-2" appDropdown>
+            <button type="button" class="btn btn-submit" (click)="onEditEvent()">Edit Event <fa-icon [icon]="faEdit" class="ml-2"></fa-icon></button>
+            <button type="button" class="btn btn-cancel" (click)="onDeleteEvent()">Delete Event <fa-icon [icon]="faTrash" class="ml-2"></fa-icon></button>
+            
         </div>
     </div>
 </div>

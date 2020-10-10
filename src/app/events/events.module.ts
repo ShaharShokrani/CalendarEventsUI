@@ -9,13 +9,16 @@ import { EventEditComponent } from './event-edit/event-edit.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { EventsRoutingModule } from './events-routing.module';
 import { SharedModule } from '../shared/shared.module';
-import { EventFilterComponent } from './event-filter/event-filter.component';
+import { EventAddButtonComponent } from './event-add-button/event-add-button.component';
 import { EventsAPIService } from './events-api.service';
 import { EventService } from './events.service';
 import { EventsResolverService } from './events-resolver.service';
 import { AuthInterceptorService } from '../auth/auth-interceptor.service';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { EventResolverService } from './event-resolver.service';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 
 @NgModule({
   declarations: [
@@ -24,13 +27,16 @@ import { EventResolverService } from './event-resolver.service';
     EventDetailComponent,    
     EventStartComponent,
     EventEditComponent,
-    EventFilterComponent
+    EventAddButtonComponent
   ],
   imports: [
     ReactiveFormsModule, 
     FullCalendarModule,    
     EventsRoutingModule,
-    SharedModule    
+    SharedModule,
+    OwlDateTimeModule, 
+    OwlNativeDateTimeModule,
+    FontAwesomeModule     
   ],
   exports: [
     EventsRoutingModule

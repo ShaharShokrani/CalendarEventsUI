@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import { EventModelDTO } from '../event.model';
 import { EventService } from '../events.service';
@@ -12,6 +13,8 @@ import { EventService } from '../events.service';
 export class EventDetailComponent implements OnInit {
   eventModel: EventModelDTO;
   id: string;
+  faEdit = faEdit
+  faTrash = faTrash
 
   constructor(private eventService: EventService,
     private router: Router,
