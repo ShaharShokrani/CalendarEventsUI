@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 
 @Component({  
   templateUrl: './account.component.html',  
+  styleUrls: ['./account.component.scss'],
   providers: []
 })
 export class AccountComponent implements OnInit {
