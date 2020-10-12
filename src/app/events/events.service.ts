@@ -3,6 +3,7 @@ import { EventModelDTO } from './event.model';
 import { EventsAPIService } from './events-api.service';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
+import { SearchRequest } from '../shared/models/search-request.model';
 
 @Injectable()
 export class EventService {    
@@ -21,7 +22,7 @@ export class EventService {
         this.eventModelDTOs = events;
         this.eventsSubject.next(events);
     }
-    getEvents(filter: string) : Observable<EventModelDTO[]> {
+    searchEvents(filter: SearchRequest) : Observable<EventModelDTO[]> {
         if (this.eventModelDTOs.length !== 0) {
             return of(this.eventModelDTOs);
         }

@@ -5,6 +5,7 @@ import { map, tap, take, exhaustMap, share, shareReplay, catchError } from 'rxjs
 import { EventModelDTO } from './event.model';
 import { ConfigService } from '../shared/config.service';
 import { Observable, EMPTY } from 'rxjs';
+import { SearchRequest } from '../shared/models/search-request.model';
 
 @Injectable()
 export class EventsAPIService {
@@ -30,7 +31,7 @@ export class EventsAPIService {
       );
   }
 
-  getEvents(filter: string) : Observable<EventModelDTO[]> {
+  getEvents(searchRequest: SearchRequest) : Observable<EventModelDTO[]> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
@@ -40,7 +41,7 @@ export class EventsAPIService {
     return this._httpClient
       .post<EventModelDTO[]>(
         this._configService.resourceApiURI + '/events/search',
-        {},
+        searchRequest,
         httpOptions
       );
   }

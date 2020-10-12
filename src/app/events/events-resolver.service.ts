@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { EventModelDTO } from './event.model';
 import { EventService } from './events.service';
+import { SearchRequest } from '../shared/models/search-request.model';
 
 @Injectable()
 export class EventsResolverService implements Resolve<EventModelDTO[]> {
@@ -13,6 +14,7 @@ export class EventsResolverService implements Resolve<EventModelDTO[]> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) : Observable<EventModelDTO[]> {
     console.log(route);
-    return this._eventsService.getEvents(null);
+    var searchRequest = new SearchRequest();
+    return this._eventsService.searchEvents(searchRequest);
   }
 }

@@ -1,1 +1,18 @@
-<p>event-filter works!</p>
+<h1>Filters:</h1>
+<button type="button" class="btn btn-submit" (click)="onAddFilterClick()">Add Filter <fa-icon [icon]="faPlus" class="ml-2"></fa-icon></button>
+<form [formGroup]="filterFormGroup" (ngSubmit)="onSubmit()">
+    <div formArrayName="filtersArray">          
+        <div *ngFor="let filter of filtersArray.controls; let i = index">
+            <div [formGroupName]="i">                
+            <select formControlName="propertyName"> 
+                <option *ngFor="let propertyNameItem of propertiesNames" value="{{propertyNameItem.id}}" >{{propertyNameItem.label}}</option>
+            </select>
+            <select formControlName="operation"> 
+                <option *ngFor="let operationItem of operations" value="{{operationItem.id}}" >{{operationItem.label}}</option>
+            </select>
+            <input type="text" formControlName="value">            
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-submit" [disabled]="!filterFormGroup.valid">Submit</button>
+</form>

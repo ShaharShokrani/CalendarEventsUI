@@ -65,7 +65,7 @@ export class AuthService extends BaseService  {
     }      
   }
 
-  async signout() {
+  async logOut() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.decodedToken = null;
