@@ -1,47 +1,32 @@
-<div class="row justify-content-center">
-    <div class="col-md-4 text-center">
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-        <img class="mb-4" src="" alt="" width="125" height="125">
-        <h1 class="h3 mb-3 font-weight-normal">Register</h1>
-        <div class="form-group">
-            <label for="email" class="sr-only">Email address</label>
-            <input
-              type="email"
-              id="email"
-              formControlName="email"
-              class="form-control"
-              placeholder="Email"/>
-            <!-- <small [hidden]="email.valid || (email.pristine && !submitted)" class="text-danger">Please enter a valid email</small> -->
-        </div>
-        <div class="form-group">
-            <label for="password" class="sr-only">Password</label>
-            <input
-              type="password"
-              id="password"
-              formControlName="password"
-              class="form-control"
-              placeholder="Password"/>
-            <div *ngIf="registerForm.get('password').errors">
-              <span *ngIf="registerForm.get('password').errors['MaxRuleValidation']">You have entered a password with what is to big</span>
-              <span *ngIf="registerForm.get('password').errors['MinRuleValidation']">You have entered a password with less than 6 characters</span>
-              <span *ngIf="registerForm.get('password').errors['UpperRuleValidation']">You have entered a password with no uppercase character</span>
-              <span *ngIf="registerForm.get('password').errors['LowerRuleValidation']">You have entered a password with no lowercase character</span>
-              <span *ngIf="registerForm.get('password').errors['SpecialRuleValidation']">You have entered a password with special character</span>
-            </div>
-
-
-
-            <!-- <small id="passwordHelp" class="form-text text-muted">Min. 6 characters with at least one non alphanumeric character</small> -->
-          </div>   
-        <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="!registerForm.valid">Go</button>
-        <ngx-spinner></ngx-spinner>   
-        <div *ngIf="error" class="alert alert-danger mt-3" role="alert">
-            <strong>Oops!</strong> {{error}}
-        </div>     
-      </form>      
-      <div *ngIf="success" class="alert alert-success" role="alert">
-          <h4 class="alert-heading">Well done!</h4>
-          <p>Your account was created successfully, <a routerLink="/login">Please login</a> to continue.</p>        
-      </div>  
-    </div> 
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <h3>Register</h3>
+  <div class="form-group">
+    <label for="email" class="sr-only">Email address</label>
+    <input type="email" id="email" formControlName="email" class="form-control" placeholder="Email" />
   </div>
+  <div class="form-group">
+    <label for="password" class="sr-only">Password</label>
+    <input type="password" id="password" formControlName="password" class="form-control" placeholder="Password" />
+    <div class="text-light" *ngIf="registerForm.get('password').errors">
+      <div *ngIf="registerForm.get('password').errors['MaxRuleValidation']">The password should be less than 20
+        characters</div>
+      <div *ngIf="registerForm.get('password').errors['MinRuleValidation']">The password should be more than 6
+        characters</div>
+      <div *ngIf="registerForm.get('password').errors['UpperRuleValidation']">The password should have at least one
+        uppercase character</div>
+      <div *ngIf="registerForm.get('password').errors['LowerRuleValidation']">The password should have at least one
+        lowercase character</div>
+      <div *ngIf="registerForm.get('password').errors['SpecialRuleValidation']">The password should have at least one
+        special character</div>
+    </div>
+  </div>
+  <button class="btn btn-lg btn-primary btn-block btn-submit " type="submit" [disabled]="!registerForm.valid">Register</button>
+  <ngx-spinner></ngx-spinner>
+  <div *ngIf="error" class="alert alert-danger mt-3" role="alert">
+    <strong>Oops!</strong> {{error}}
+  </div>
+</form>
+<div *ngIf="success" class="alert alert-success" role="alert">
+  <h4 class="alert-heading">Well done!</h4>
+  <p>Your account was created successfully, <a routerLink="/login">Please login</a> to continue.</p>
+</div>
