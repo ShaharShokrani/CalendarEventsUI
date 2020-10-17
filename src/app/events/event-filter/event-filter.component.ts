@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FilterStatement,FilterOperation, PropertiesNames_Mapping as PROPERTIES_NAMES_MAPPING, Operation_Mapping } from 'src/app/shared/models/search-request.model';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FilterStatement,FilterOperation, PropertiesNames_Mapping as PROPERTIES_NAMES_MAPPING, Operation_Mapping, FilterBase } from 'src/app/shared/models/search-request.model';
 import { faCheck, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -17,7 +17,7 @@ export class EventFilterComponent implements OnInit {
   
   filterFormGroup: FormGroup;
   filterFormGroupsArray: Array<FormGroup>;
-  private _controlConfig: { [key: string]: any;};
+  private _controlConfig: { [key: string]: any; };
   private _defaultFilterStatement: FilterStatement;
 
   _filterStatements: FilterStatement[] = [    
@@ -54,8 +54,18 @@ export class EventFilterComponent implements OnInit {
     //   });
     // }
   }
-  
-  get filtersArray() {
+
+  toFormGroup(filters: FilterBase<string>[] ) {
+    const group: any = {};
+
+    filters.forEach(filter => {
+      group[filter.key] = filter.required ? new FormControl(filter.value || '', Validators.required)
+                                              : new FormControl(filter.value || '');
+    });
+    return new FormGroup(group);
+  }
+
+  get filtersArray(): FormArray {
     return this.filterFormGroup.get('filtersArray') as FormArray;
   }
 
@@ -75,5 +85,14 @@ export class EventFilterComponent implements OnInit {
     this.filtersArray.push(this.createCustomerFormGroup(this._defaultFilterStatement));    
   }
   onSubmit() {    
+    var filters : FilterStatement[] = [];        
+
+    this.filtersArray.controls.forEach(control => {
+      var filterStatement = new FilterStatement();
+      filterStatement.propertyName = control.value["propertyName"];
+      filterStatement.operation = +control.value["operation"]
+      filterStatement.value = control.value["value"];
+      filters.push(control.value);
+    });    
   }
 }
