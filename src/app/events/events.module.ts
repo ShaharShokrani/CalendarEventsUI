@@ -13,13 +13,12 @@ import { EventAddButtonComponent } from './event-add-button/event-add-button.com
 import { EventsAPIService } from './events-api.service';
 import { EventService } from './events.service';
 import { EventsResolverService } from './events-resolver.service';
-import { AuthInterceptorService } from '../auth/auth-interceptor.service';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { EventResolverService } from './event-resolver.service';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { EventFilterComponent } from './event-filter/event-filter.component';
-
+import { EventsFiltersComponent } from './events-filters/events-filters.component';
+import { EventFilterComponent } from './events-filters/event-filter/event-filter.component';
+import { EventsFiltersService } from './events-filters/events-filters.service';
 
 @NgModule({
   declarations: [
@@ -29,6 +28,7 @@ import { EventFilterComponent } from './event-filter/event-filter.component';
     EventStartComponent,
     EventEditComponent,
     EventAddButtonComponent,
+    EventsFiltersComponent,
     EventFilterComponent
   ],
   imports: [
@@ -44,6 +44,7 @@ import { EventFilterComponent } from './event-filter/event-filter.component';
     EventsRoutingModule
   ],
   providers: [
+    EventsFiltersService,
     EventsAPIService,
     EventService,    
     EventsResolverService,

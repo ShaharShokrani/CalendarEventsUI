@@ -4,8 +4,8 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-9">
-    <app-event-filter></app-event-filter>
+  <div class="col-md-9">    
+    <app-events-filters [filters]="filters$ | async"></app-events-filters>
     <app-events-list></app-events-list>
   </div>
   <div class="col-md-3">

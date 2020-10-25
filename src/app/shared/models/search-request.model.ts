@@ -17,21 +17,24 @@ export class FilterBase<T> {
         controlType?: string;
         type?: string;
         options?: {key: string, value: string}[];
-      } = {}) {
-      this.value = options.value;
-      this.key = options.key || '';
-      this.label = options.label || '';
-      this.required = !!options.required;
-      this.order = options.order === undefined ? 1 : options.order;
-      this.controlType = options.controlType || '';
-      this.type = options.type || '';
-      this.options = options.options || [];
+    } = {}) {
+        this.value = options.value;
+        this.key = options.key || '';
+        this.label = options.label || '';
+        this.required = !!options.required;
+        this.order = options.order === undefined ? 1 : options.order;
+        this.controlType = options.controlType || '';
+        this.type = options.type || '';
+        this.options = options.options || [];
     }
-  }
+}
   
+export class TextboxFilter extends FilterBase<string> {
+    controlType = 'textbox';
+}
 
-export class TextboxQuestion extends FilterBase<string> {
-  controlType = 'textbox';
+export class MultiCheckboxFilter extends FilterBase<string> {
+    controlType = 'multicheckbox';
 }
 
 export class SearchRequest {
