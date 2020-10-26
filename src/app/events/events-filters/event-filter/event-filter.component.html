@@ -1,51 +1,20 @@
 <div [formGroup]="form">
-  <label [attr.for]="filter.key">{{filter.label}}</label>
-
-  <div [ngSwitch]="filter.controlType">
-
-    <!-- <input *ngSwitchCase="'textbox'" [formControlName]="filter.key" [id]="filter.key" [type]="filter.type"> -->
-
-    <!-- <select *ngSwitchCase="'dropdown'" [id]="filter.key" [formControlName]="filter.key">
-      <option *ngFor="let opt of filter.options" [value]="opt.key">{{opt.value}}</option>
-    </select> -->
-
-    <div *ngSwitchCase="'multicheckbox'">
-      <div *ngFor="let option of options.controls ; let i = index" [formArrayName]="filter.key">          
-        <input type="checkbox" [formControlName]="i">
-        <span>{{filter.options[i].value}}</span>
+  <div ngbDropdown class="d-inline-block">
+    <button class="btn btn-outline-primary" id="filter.key" ngbDropdownToggle>
+      {{ filter.label }} <fa-icon [icon]="faFilter" class="ml-2"></fa-icon>
+    </button>
+    <div ngbDropdownMenu aria-labelledby="filter.key">
+      <div [ngSwitch]="filter.controlType">
+        <div *ngSwitchCase="'multicheckbox'" class="ml-2">
+          <div
+            *ngFor="let option of options.controls; let i = index"
+            [formArrayName]="filter.key"
+          >
+            <input type="checkbox" [formControlName]="i" />
+            <span class="ml-1">{{ filter.options[i].value }}</span>
+          </div>
+        </div>
       </div>
     </div>
-  </div>  
-</div>
-
-
-
-<!-- <button type="button" class="btn btn-submit" (click)="onAddFilterClick()">Add Filter <fa-icon [icon]="faPlus" class="ml-2"></fa-icon></button>
-<form [formGroup]="filterFormGroup" (ngSubmit)="onSubmit()">
-  <div formArrayName="filtersArray">          
-      <div *ngFor="let filter of filtersArray.controls; let i = index">
-          <div [formGroupName]="i">                
-          <select formControlName="propertyName"> 
-              <option *ngFor="let propertyNameItem of propertiesNames" value="{{propertyNameItem.id}}" >{{propertyNameItem.label}}</option>
-          </select>
-          <select formControlName="operation"> 
-              <option *ngFor="let operationItem of operations" value="{{operationItem.id}}" >{{operationItem.label}}</option>
-          </select>
-          <!-- <label [attr.for]="filter.key">{{filter.label}}</label>
-
-          <div [ngSwitch]="filter.controlType">
-        
-            <input *ngSwitchCase="'textbox'" [formControlName]="filter.key"
-                    [id]="filter.key" [type]="filter.type">
-        
-            <select *ngSwitchCase="'dropdown'" [id]="filter.key" [formControlName]="filter.key">
-              <option *ngFor="let opt of filter.options" [value]="opt.key">{{opt.value}}</option>
-            </select>
-        
-          </div> -->
-          <!-- <input type="text" formControlName="value">            
-          </div>
-      </div>
   </div>
-  <button type="submit" class="btn btn-submit" [disabled]="!filterFormGroup.valid">Submit</button>
-</form> --> -->
+</div>

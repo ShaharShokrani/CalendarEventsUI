@@ -19,12 +19,13 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EventsFiltersComponent } from './events-filters/events-filters.component';
 import { EventFilterComponent } from './events-filters/event-filter/event-filter.component';
 import { EventsFiltersService } from './events-filters/events-filters.service';
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
     EventsComponent,
     EventListComponent,
-    EventDetailComponent,    
+    EventDetailComponent,
     EventStartComponent,
     EventEditComponent,
     EventAddButtonComponent,
@@ -32,13 +33,14 @@ import { EventsFiltersService } from './events-filters/events-filters.service';
     EventFilterComponent
   ],
   imports: [
-    ReactiveFormsModule, 
-    FullCalendarModule,    
+    ReactiveFormsModule,
+    FullCalendarModule,
     EventsRoutingModule,
     SharedModule,
-    OwlDateTimeModule, 
+    OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    FontAwesomeModule     
+    FontAwesomeModule,
+    NgbModule
   ],
   exports: [
     EventsRoutingModule
@@ -46,9 +48,9 @@ import { EventsFiltersService } from './events-filters/events-filters.service';
   providers: [
     EventsFiltersService,
     EventsAPIService,
-    EventService,    
+    EventService,
     EventsResolverService,
     EventResolverService
   ]
 })
-export class EventsModule {}
+export class EventsModule { }
