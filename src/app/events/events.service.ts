@@ -23,17 +23,17 @@ export class EventService {
         this.eventsSubject.next(events);
     }
     searchEvents(filter: SearchRequest) : Observable<EventModelDTO[]> {
-        if (this.eventModelDTOs.length !== 0) {
-            return of(this.eventModelDTOs);
-        }
-        else {
+        // if (this.eventModelDTOs.length !== 0) {
+        //     return of(this.eventModelDTOs);
+        // }
+        // else {
             return this._eventsAPIService.getEvents(filter)
             .pipe(
                 tap((eventModelDTOs: EventModelDTO[]) => {
                     this.setEvents(eventModelDTOs);
                 })
             );
-        }
+        //}
     }
     getEventById(id: string) : Observable<EventModelDTO> {
         var event = this.eventModelDTOs.find(x => x.id === id);
