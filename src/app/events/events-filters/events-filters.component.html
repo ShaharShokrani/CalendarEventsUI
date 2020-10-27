@@ -1,16 +1,23 @@
-<div>
-    <form [formGroup]="form">
-  
-      <div *ngFor="let filter of filters" class="form-row">
-        <app-event-filter [filter]="filter" [form]="form"></app-event-filter>
-      </div>
-  
-      <div class="form-row">
-        <button type="submit" [disabled]="!form.valid">Save</button>
-      </div>
-    </form>
-  
-    <div *ngIf="payLoad" class="form-row">
-      <strong>Saved the following values</strong><br>{{payLoad}}
+<div class="mb-2">
+  <form [formGroup]="form">
+    <div *ngFor="let filter of filters" class="btn-group mr-3">
+      <app-event-filter [filter]="filter" [form]="form"></app-event-filter>
     </div>
+
+    <!-- <div class="form-row">
+        <button type="submit" [disabled]="!form.valid">Save</button>
+      </div> -->
+    <div class="btn-group mr-3">
+      <div class="d-inline-block">
+        <button
+          class="btn btn-outline-primary"
+          id="filter-submit"
+        >Save</button>
+      </div>
+    </div>
+  </form>
+
+  <div *ngIf="payLoad" class="form-row">
+    <strong>Saved the following values</strong><br />{{ payLoad }}
+  </div>
 </div>
